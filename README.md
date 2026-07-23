@@ -134,7 +134,7 @@ Scope SAEs, the open `circuit-tracer`).
   [Zero to Hero](https://karpathy.ai/zero-to-hero.html) · Raschka,
   [*Build an LLM from Scratch*](https://github.com/rasbt/LLMs-from-scratch) and
   [*Build a Reasoning Model from Scratch*](https://github.com/rasbt/reasoning-from-scratch) ·
-  Mike X Cohen's LLM / computational-modeling lessons (book + code)
+  Mike X Cohen, [*50 ML projects to understand LLMs*](https://github.com/mikexcohen/ML4LLM_book) (investigate transformer internals as data)
 - **Foundational threads:** [Distill Circuits](https://distill.pub/2020/circuits/) ·
   [Transformer Circuits Thread](https://transformer-circuits.pub/)
 - **Tooling:** [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) ·

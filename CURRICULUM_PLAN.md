@@ -6,7 +6,7 @@ Walk the mech-interp lineage — Distill vision circuits (2020) → Anthropic tr
 rung**, so a learner ends able to *adjudicate* the recent claims, not just read them.
 
 ## Structure (one directory per rung; each: README = the reading+build+control, starter.py = the project)
-- **rung0 — build the model first** (prereq): nanoGPT / Raschka LLM & Reasoning from Scratch / Mike X Cohen.
+- **rung0 — build the model first** (prereq): nanoGPT / Raschka LLM & Reasoning from Scratch / Mike X Cohen (50 ML projects to understand LLMs, github.com/mikexcohen/ML4LLM_book).
 - **rung1 — features & circuits** (vision, InceptionV1) — control: model-randomization sanity check.
 - **rung2 — residual stream** (GPT-2, TransformerLens) — control: ablate-vs-random-head.
 - **rung3 — superposition** (toy model, laptop; runnable) — control: random-dictionary null.

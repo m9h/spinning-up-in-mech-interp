@@ -24,9 +24,12 @@ hand here. This rung is optional if you already know it, and load-bearing if you
   [`rasbt/reasoning-from-scratch`](https://github.com/rasbt/reasoning-from-scratch). Chain-of-
   thought, verifiers, and RL fine-tuning built by hand — the machinery behind the
   society-of-thought / RL claims you will adjudicate at rung 8.
-- **For the math — Mike X Cohen.** Mike X Cohen's practical LLM / computational-modeling
-  lessons (book + code) — the linear algebra, softmax, and numerical intuition the whole ladder
-  rests on. Use it as a reference whenever a rung's math feels like a black box.
+- **For hands-on investigation — Mike X Cohen, *50 ML projects to understand LLMs*.**
+  [`mikexcohen/ML4LLM_book`](https://github.com/mikexcohen/ML4LLM_book) — 50 Colab projects that
+  investigate transformer *mechanisms* by treating internals as data: attention patterns, layer
+  dynamics, statistical/causal analysis, and activation manipulation. It's less "build the
+  model" than "measure the model," so it's really a **companion project track that pairs with
+  rungs 2–7** — reach for it whenever you want another angle of attack on a rung's technique.
 
 ## Build (the checkpoint)
 
