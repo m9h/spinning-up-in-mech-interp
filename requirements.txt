@@ -1,0 +1,15 @@
+# Core (rung 3 runs with just torch)
+torch>=2.2
+numpy
+# Rung 1 — vision features/circuits (InceptionV1)
+# lucent            # feature visualization on InceptionV1
+# Rungs 2, 4 — transformer foundations / induction heads
+# transformer_lens
+# Rung 5 — sparse autoencoders (Gemma Scope)
+# sae_lens
+# transformers
+# Rung 7 — attribution graphs
+# circuit-tracer     # github.com/safety-research/circuit-tracer
+# Rungs 6, 8 — lenses + the recent-claim capstones (our companion code)
+# git+https://github.com/anthropics/jacobian-lens.git
+# git+https://github.com/m9h/jlens-lab.git
