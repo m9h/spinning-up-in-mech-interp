@@ -15,24 +15,36 @@ see the residual stream as a communication channel, the rest of the field is leg
 
 ## Build
 
-Open model: **GPT-2 small** via [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens).
+`starter.py` runs it on **GPT-2 small** with plain `transformers` (no TransformerLens needed —
+though that is the canonical tool for this, and cleaner for per-head work). It measures the two
+circuits of an attention head separately, each against its null:
 
-1. Cache activations for a prompt; confirm the residual stream identity (each layer's output
-   = input + head writes + MLP write).
-2. For one head, compute its **QK attention pattern** and its **OV** effect on the logits
-   (its "direct logit attribution").
-3. Find a head whose OV consistently copies/moves a token — the seed of an induction head.
+1. **OV — what a head writes (weights only).** For every head, extract its OV matrix
+   `W_V W_O` (residual → residual), send each token's embedding through it, unembed, and score
+   how far the token promotes *itself* (a per-row z-score). This needs no forward pass at all —
+   the copying behavior is in the weights. GPT-2's layer-11 heads score high; the top head lands
+   at z ≈ +5.8.
+2. **QK — where a head looks (one forward pass).** For a real sentence, measure each head's
+   attention from position *i* to *i−1*. GPT-2's **L4H11** — the textbook previous-token head —
+   comes out at ≈ 1.00.
 
-`starter.py` scaffolds a TransformerLens hook + direct-logit-attribution stub.
+Together, a QK that finds a position and an OV that copies from it are exactly the two pieces
+rung 4 assembles into an induction head.
 
 ## The control
 
 Attention patterns are famously *not* explanations (Jain & Wallace, *Attention is not
-Explanation*, 2019). So don't trust the pattern — trust the **causal** effect: **ablate** the
-head (zero its OV write, or mean-patch it) and measure the change in the model's output on the
-behavior you attributed to it. If ablating a head you called "important" changes nothing,
-your attention-pattern story was decoration. Compare against ablating a **random** head as a
-baseline.
+Explanation*, 2019), so neither score is trusted on its own — each is read against a null:
+
+- **OV:** a **random matrix of the same norm** scores ≈ 0 (in the demo: top head +5.8, median
+  head +1.0, random null +0.01) — copying is specific to particular heads, not an artifact of
+  the measurement.
+- **QK:** the **uniform-attention baseline** (~0.16 here) is what a head with no positional
+  preference would score; a real previous-token head must beat it (L4H11 hits 1.00).
+
+The deeper habit — carried to rung 4 — is causal: **ablate** a head you call important and
+measure the behavior change against ablating a **random** head. If it changes nothing, the
+attention-pattern story was decoration.
 
 ## Toward the recent papers
 
