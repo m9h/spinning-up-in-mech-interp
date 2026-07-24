@@ -1,15 +1,17 @@
-# Core (rung 3 runs with just torch)
+# Runnable rungs use only these — install and run any of rungs 1-5 as-is.
 torch>=2.2
 numpy
-# Rung 1 — vision features/circuits (InceptionV1)
-# lucent            # feature visualization on InceptionV1
-# Rungs 2, 4 — transformer foundations / induction heads
-# transformer_lens
-# Rung 5 — sparse autoencoders (Gemma Scope)
-# sae_lens
-# transformers
-# Rung 7 — attribution graphs
-# circuit-tracer     # github.com/safety-research/circuit-tracer
-# Rungs 6, 8 — lenses + the recent-claim capstones (our companion code)
+transformers>=4.44        # rungs 2, 4, 5 (GPT-2, plain HF, no TransformerLens needed)
+huggingface_hub           # rung 5 (downloads the GPT-2 SAE tensors)
+safetensors               # rung 5
+torchvision               # rung 1 (InceptionV1 = googlenet)
+
+# --- Canonical tooling (optional): the source papers use these; the rungs point to them ---
+# transformer_lens        # rungs 2, 4 — cleaner per-head work; ARENA uses it
+# sae_lens                # rung 5 — pretrained SAEs incl. Gemma Scope (one-line release swap)
+# lucent                  # rung 1 — optimization-based feature visualization (OpenAI Microscope)
+# circuit-tracer          # rung 7 — github.com/safety-research/circuit-tracer
+
+# --- Rungs 6, 8 — lenses + the recent-claim capstones (our companion code) ---
 # git+https://github.com/anthropics/jacobian-lens.git
 # git+https://github.com/m9h/jlens-lab.git
