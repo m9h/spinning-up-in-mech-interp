@@ -120,12 +120,26 @@ Every `rungN_*/README.md` follows the same structure:
    and what passing/failing it means. *This is the point of the rung.*
 5. **Toward the recent papers** — the sentence of the 2025–26 papers this rung unlocks.
 
-Rungs 6 and 8 draw directly on working code
+Rungs **1–5 and 7 ship a tested, self-contained `starter.py`** you can run today — each
+finds a real result on an open model and then runs its own null, using only
+`torch` / `transformers` / `torchvision` (canonical tools like TransformerLens, SAELens,
+lucent and `circuit-tracer` are named as scale-ups, not required). Rung 3 needs only a laptop
+CPU; rungs 1, 2, 4, 5, 7 download a small open model (GPT-2 or InceptionV1) once. Rungs 6 and
+8 draw directly on our working research code
 ([`jacobian-lens`](https://github.com/m9h/jacobian-lens),
 [`jlens-lab`](https://github.com/m9h/jlens-lab),
-[lenses on the Hub](https://huggingface.co/mhough/olmo3-jacobian-lenses)); rungs 1–5 and 7
-build on published, fully-open targets (InceptionV1, the released Toy-Models code, Gemma
-Scope SAEs, the open `circuit-tracer`).
+[lenses on the Hub](https://huggingface.co/mhough/olmo3-jacobian-lenses)).
+
+What each runnable starter finds, and the null that guards it:
+
+| rung | finds (on an open model) | the null it runs |
+|---|---|---|
+| 1 | an orientation/edge detector in InceptionV1 (channel #31, selectivity 0.998) | same architecture, **random weights** → tuning vanishes (Adebayo) |
+| 2 | GPT-2's copying heads (OV z ≈ +5.8) and previous-token head **L4H11** (1.00) | **random matrix** OV ≈ 0; **uniform-attention** QK baseline |
+| 3 | superposition — >m features packed into m dims | **random dictionary** recovery floor |
+| 4 | GPT-2's induction heads (L5H5 …) | **ablate random heads** → in-context loss barely moves |
+| 5 | an SAE feature you can interpret *and* steer | **random-direction** steer nets ~0; **negation** reverses |
+| 7 | the IOI computation moving subject-token → final-token across layers | **median (layer,pos) patch** restores ~0% |
 
 ## Resources
 
