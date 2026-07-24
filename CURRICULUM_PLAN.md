@@ -19,9 +19,9 @@ rung**, so a learner ends able to *adjudicate* the recent claims, not just read 
 ## Each rung README follows: The idea → Read → Build → The control → Toward the recent papers.
 
 ## Build order / status
-- rung3 has a complete, laptop-runnable reference (`starter.py`) + its control.
+- rungs 3 and 4 have complete, runnable references (`starter.py`) + their controls (rung3 CPU/laptop; rung4 downloads GPT-2).
 - rungs 6 & 8 run on the working companion code (jacobian-lens, jlens-lab, the Hub lenses).
-- rungs 0,1,2,4,5,7 ship a README + a scaffolded starter pointing at the canonical open target.
+- rungs 0,1,2,5,7 ship a README + a scaffolded starter pointing at the canonical open target.
 
 ## Verification
 Every rung's `starter.py` should, when complete, (a) reproduce the technique on the named open
