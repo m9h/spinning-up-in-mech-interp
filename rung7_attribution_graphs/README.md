@@ -16,21 +16,34 @@ word of a rhyming line before writing the line."
 
 ## Build
 
-Open tooling: **[`circuit-tracer`](https://github.com/safety-research/circuit-tracer)**
-(released), on **Gemma-2-2B** or **Llama**.
+`starter.py` runs the method *underneath* attribution graphs — **activation patching** (causal
+tracing) — on **GPT-2 small** with plain `transformers`, so the idea is concrete before you
+scale to the full tool. On the classic IOI task ("When John and Mary went to the store, John
+gave a drink to ___" → " Mary"):
 
-1. Pick a small, sharp behavior (e.g. a two-step factual lookup, "the capital of the country
-   whose capital is …").
-2. Build the attribution graph; identify the intermediate feature that carries the bridging
-   fact.
-3. Intervene on that feature and confirm the downstream answer changes as the graph predicts.
+1. Corrupt the subject (John→Mary) so the answer flips to " John" — a clean/corrupted pair that
+   differ at exactly one token.
+2. Copy the **clean** residual stream into the **corrupted** run, one (layer, position) at a
+   time, and measure how much of the answer each cell restores.
+3. Read the resulting layer × position map: name-identity sits at the **subject token in early
+   layers**, then hands off to the **final token in late layers** (where the name-mover heads
+   write the answer). That sparse, moving path *is* a minimal attribution graph — you can watch
+   the computation cross layers.
+
+**Scale-up (canonical target):** **[`circuit-tracer`](https://github.com/safety-research/circuit-tracer)**
+(released) builds transcoder-based attribution graphs on Gemma-2-2B / Llama, resolving the path
+down to individual *features* rather than residual positions — the same causal logic, at feature
+resolution.
 
 ## The control
 
-Attribution graphs can be *unfaithful* — clean, causal-looking, and wrong — by exploiting
+The control is built into patching and is the whole point: **the median (layer, position) cell
+restores ~0%** — only a handful of cells carry the computation. A component matters only if
+patching it moves the output. This is also the guard against the failure mode of the scaled-up
+method: attribution graphs can be *unfaithful* — clean, causal-looking, and wrong — by exploiting
 dormant pathways (Makelov, Lange & Nanda, 2023; Anthropic's own *Toy Model of Mechanistic
-Unfaithfulness*, 2025). The check: **validate the intervention**. If forcing the intermediate
-feature does not move the output as the graph claims, the graph is a story, not a mechanism.
+Unfaithfulness*, 2025). The check is the same reflex: **validate the intervention**. If forcing
+a feature the graph names does not move the output, the graph is a story, not a mechanism.
 Always report the faithfulness of the edges you rely on.
 
 ## Toward the recent papers
