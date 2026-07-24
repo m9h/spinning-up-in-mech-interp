@@ -15,22 +15,34 @@ far more **monosemantic** than neurons, and you can *steer* the model by turning
 
 ## Build
 
-Open target: **Gemma Scope** — Google's released SAEs for Gemma-2 (via
-[SAELens](https://github.com/jbloomAus/SAELens) / Neuronpedia). No SAE training required.
+`starter.py` runs it end-to-end on **GPT-2 small**, which has *non-gated* pretrained SAEs
+(Joseph Bloom's `gpt2-small-res-jb` release), so it needs no HF token and runs on CPU — no
+SAE training required. It downloads one layer's SAE tensors directly (~150 MB) and uses plain
+`transformers`:
 
-1. Load a Gemma-2-2B residual-stream SAE; encode activations on a prompt set.
-2. Interpret a handful of live features (top-activating tokens) and confirm they are more
-   monosemantic than the nearest raw neurons.
-3. **Steer**: add a chosen feature's decoder direction to the residual stream and watch the
-   generation bend toward that concept.
+1. **Interpret a feature by its decoder direction.** Logit-lens each feature's decoder row
+   (`W_dec[f] @ W_U`) to see which tokens it writes toward, and auto-pick a sharp,
+   word-initial content feature — no activation dataset needed to read what a feature *means*.
+2. **Steer with it.** Add the feature's decoder direction to the residual stream at its own
+   hook layer, injected at the feature's *natural activation scale* (calibrated, not past
+   saturation). The top-5 next tokens flip from the sensible continuation to the feature's own
+   tokens.
+
+**Scale-up (canonical target):** Google's **Gemma Scope** SAEs for Gemma-2, via
+[SAELens](https://github.com/jbloomAus/SAELens) / Neuronpedia — the same code, a bigger model
+and millions of features. (Gemma-2 is gated, so it needs a HF token; GPT-2 keeps the starter
+frictionless.)
 
 ## The control
 
-Steering "works" trivially if *any* push changes the output. The null: steer with a
-**random direction** of the same norm, and with the **negation** of the feature. A real
-feature's steering effect must exceed the random-direction baseline and be specific (the
-concept appears, its negation doesn't). This is the same discipline the introspection paper
-failed (its negation was "comparably effective") — you learn it here on open weights.
+Steering "works" trivially if *any* push changes the output — so the readout is a
+**specificity** score: the mean logit of the feature's *own* tokens minus that of a fixed
+control token set, which cancels the generic logit shift any large perturbation causes. Then
+the null: steer with a **random direction of the same norm**, and with the **negation** of the
+feature. A real feature raises its specificity far above the random baseline (which nets ~zero)
+and its negation lowers it. In the runnable demo: feature **+6.5**, random null **+1.0**,
+negation **−13.5**. This is the exact discipline the introspection paper failed (its negation
+was "comparably effective") — you learn it here on open weights.
 
 ## Toward the recent papers
 
