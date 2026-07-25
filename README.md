@@ -134,7 +134,7 @@ What each runnable starter finds, and the null that guards it:
 
 | rung | finds (on an open model) | the null it runs |
 |---|---|---|
-| 1 | an orientation/edge detector in InceptionV1 (channel #31, selectivity 0.998) | same architecture, **random weights** → tuning vanishes (Adebayo) |
+| 1 | an orientation/edge detector in InceptionV1 (channel #48, selectivity 1.000) | **two** nulls: random-init (Adebayo) *and* the stronger weight-shuffle |
 | 2 | GPT-2's copying heads (OV z ≈ +5.8) and previous-token head **L4H11** (1.00) | **random matrix** OV ≈ 0; **uniform-attention** QK baseline |
 | 3 | superposition — >m features packed into m dims | **random dictionary** recovery floor |
 | 4 | GPT-2's induction heads (L5H5 …) | **ablate random heads** → in-context loss barely moves |
