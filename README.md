@@ -42,10 +42,15 @@ others combine.
 | **Format** | engineering bootcamp (weeks) | explainer + notebooks | primary research articles | short curriculum, 8 project rungs |
 | **Vision-circuits origin** | — | — | ✅ (the origin) | ✅ rung 1, taught where it's cleanest |
 | **Transformer foundations** | ✅ deep | ✅ deep | ✅ (the papers) | ✅ rungs 2–5, on the shoulders of both |
-| **A control with every technique** | partial | — | rarely | ✅ **the through-line** — each rung ends by running its null |
+| **A control with every technique** | named once, in a bonus¹ | — | rarely | ✅ **the through-line** — each rung ends by running its null |
 | **Open-weights-only, laptop-first** | mostly | ✅ | mixed (recent work is closed) | ✅ **hard requirement** — no frontier access anywhere |
 | **On-ramp to the 2025–26 property papers** | — | — | they *are* the papers | ✅ **the destination** (rung 8): J-space, introspection, societies-of-thought, metacognition |
 | **Adjudication mindset** | — | — | — | ✅ reproduce-and-check; negatives are first-class |
+
+¹ ARENA §1.3.3 identifies the problem precisely — that autointerp on *randomized* SAE latents
+scores better than expected, because top-k over a large dataset finds patterns in anything — but
+leaves it as an optional bonus bullet with no starter code or solution. It is the best statement
+of the issue in any existing course, and it is an aside. See [rung 5](rung5_sparse_autoencoders/).
 
 **The gap we fill:** existing courses teach the *techniques*; the source threads *are* the
 recent papers but run them on closed models with few controls. Nobody teaches the chain as

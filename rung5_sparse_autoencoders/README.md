@@ -44,6 +44,35 @@ and its negation lowers it. In the runnable demo: feature **+6.5**, random null 
 negation **−13.5**. This is the exact discipline the introspection paper failed (its negation
 was "comparably effective") — you learn it here on open weights.
 
+### Why this rung exists
+
+We are not the first to notice this gap — we are the first to make it a runnable exercise.
+[ARENA §1.3.3](https://learn.arena.education/chapter1_transformer_interp/13_sae_intro/), the
+best SAE course material available, states the problem exactly, in a **bonus** bullet:
+
+> they found that autointerp on randomized SAE latents performed better than one might expect,
+> because even random latents will display patterns when you take the top-k over a very large
+> dataset
+
+That is the whole thesis of this curriculum, correctly identified by someone else — and left
+as an optional aside with no starter code, no test, and no solution. In that notebook,
+"random direction" appears zero times and "null hypothesis" zero times.
+
+The same gap runs through the wider ecosystem. Across Neuronpedia's educational surface,
+controls appear only three times: as a **warning** (Gemma Scope's tooltips note that feature
+labels are "sometimes misleading, inaccurate, or just plain wrong", without saying how to
+check), as an **open problem** (its Open Problems tab asks for "comparing to fair
+baselines!"), and as ARENA's bonus bullet above. Neuronpedia's own docs for
+[features](https://docs.neuronpedia.org/features) and
+[steering](https://docs.neuronpedia.org/steering) describe autointerp scores and steering with
+no baseline or validation criterion at all. The honourable exception is the
+[SAEBench writeup](https://www.neuronpedia.org/sae-bench/info), which does carry
+randomly-initialized-model and PCA baselines — but as a results dashboard reproducing a paper,
+not as something that teaches you to run your own.
+
+So the default path through the ecosystem is *browse features → read the AI-written label →
+steer → be impressed*. This rung is the missing step: **check**.
+
 ## Toward the recent papers
 
 SAEs are the feature-finder behind the society-of-thought steering claim (rung 8) and a cousin

@@ -94,7 +94,10 @@ whether induction heads or function-vector heads drive few-shot in-context learn
 
 **Sparse autoencoders (2023–24).** Strong interpretability evidence; the steering evidence is
 where the controls thin out. No major SAE release publishes per-feature steering effects
-against a random-direction null.
+against a random-direction null — Gemma Scope runs no steering experiments at all and lists
+comparing SAE steering to steering vectors as an *open problem* in its own paper; SAEBench has
+no steering eval; Neuronpedia's per-feature exports contain no steering measurement. The gap is
+acknowledged by the field and unfilled.
 
 **Attribution graphs (2025).** The authors themselves document unfaithfulness — graphs that are
 clean, causal-looking and wrong. Read the faithfulness validation before the case studies.
