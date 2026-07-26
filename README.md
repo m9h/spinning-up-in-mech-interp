@@ -64,8 +64,21 @@ read its cells.
   asking "what is the control?"
 
 **Prerequisites:** Python, PyTorch or JAX basics, and comfort with linear algebra and
-softmax. No prior interpretability experience. A single consumer GPU (or Colab) is enough;
-several rungs need only a laptop.
+softmax. No prior interpretability experience. **No GPU required** — every runnable rung was
+verified end-to-end on a laptop CPU in under 25 seconds each.
+
+### Start here
+
+| | |
+|---|---|
+| [**GETTING_STARTED.md**](GETTING_STARTED.md) | install, run, and the exact output each rung should produce |
+| [**GLOSSARY.md**](GLOSSARY.md) | the vocabulary of the papers — residual stream, QK/OV, superposition, SAE, patching |
+| [**READING_A_PAPER.md**](READING_A_PAPER.md) | six questions for reading an interpretability result critically |
+| [**PITFALLS.md**](PITFALLS.md) | every trap that cost us a wrong result while building this |
+
+```bash
+pip install -r requirements.txt && ./verify_all.sh
+```
 
 ---
 
