@@ -30,6 +30,27 @@ All on **OLMo-3 / Ministral**, using the companion repos; each has a worked refe
 - **Metacognition.** Does the workspace covertly encode the model's own errors, and when does
   reportability of that signal emerge across training?
 
+- **Instrument convergence (new cell).** Rather than adjudicating one claim, ask whether two
+  *independent* instruments read the same thing from the same activation. Run a J-lens (a
+  linear readout) and a Natural Language Autoencoder (a trained RL'd verbalizer) on the same
+  layer-41 residual of `gemma-3-27b-it`, score their agreement, and re-pair the readouts across
+  *different prompts* as the null.
+
+  > Our result: matched agreement **0.298** vs mismatched **0.007** (z = **+8.05**), with **79%**
+  > of items beating every one of ~40 cross-prompt mispairings against a 2.4% chance rate. Two
+  > instruments sharing no machinery recover the same content — convergent validity for
+  > "verbalizable content" as a property of the *representation*, which neither paper can claim
+  > alone.
+
+  Then make it **causal** with SAE steering as ground truth: inject a known feature and ask
+  whether both instruments report it.
+
+  > Steered **0.188** (J-lens) / **0.118** (NLA); negation, random direction of matched norm, and
+  > unsteered baseline all at floor (0.000–0.008). Injecting a *known* concept is detected;
+  > injecting nothing is not.
+
+  Write-ups: `tri-lens/results/PHASE1_RESULT.md`, `PHASE2_RESULT.md`.
+
 ## The control (the whole point)
 
 Every cell ships its null, and **a negative is a first-class result**:
@@ -38,6 +59,10 @@ Every cell ships its null, and **a negative is a first-class result**:
 - introspection vs the **negation / neutral-continuation** control (ours came out: *steering,
   not introspection*);
 - society-of-thought's gain on a **second benchmark** (ours: −22 on MATH-Hard — it reverses);
+- instrument agreement vs a **mismatch null**, re-pairing readouts across different prompts;
+- and before any of it, a **positive control**: reproduce a published number, and confirm your
+  red cases fail. We reported a null result about a 2026 method that was two bugs of our own —
+  see [READING_A_PAPER.md](../READING_A_PAPER.md), question zero;
 - metacognition's internal signal **beyond output confidence**, and its emergence localized to
   a training stage.
 
