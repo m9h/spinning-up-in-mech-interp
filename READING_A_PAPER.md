@@ -9,6 +9,36 @@ Use it on the papers behind each rung. Then use it on ours.
 
 ---
 
+## Question zero: do you have a *positive* control?
+
+Everything below is about finding the null that could kill a claim. That is necessary and it is
+not sufficient, and getting this backwards is the most expensive mistake in this document.
+
+**A null-only design cannot distinguish "the method fails" from "my reproduction is broken."**
+Both produce the same output: no effect. And the second is far more likely, because the method's
+authors got it working and you have been at it for an afternoon.
+
+So before running any null, establish a **green test**: something your pipeline must reproduce
+that the original authors published — a released number, a worked example, a reference output.
+Then break your pipeline deliberately and confirm the test *fails*. A green test whose red cases
+also pass is measuring nothing.
+
+We learned this by getting it wrong. Reproducing a 2026 method, we ran a mismatch null, found
+zero effect, and wrote it up as a finding about the method. It was two bugs in our own code. The
+authors' repository shipped a worked example with reference numbers the whole time; running
+against it turned the "finding" into a pass. Worse, one of the bugs came from a *correct,
+separately verified* premise that we reasoned from to a wrong conclusion — no amount of further
+thinking would have caught it, only the anchor did.
+
+Practical form:
+
+- **Green:** reproduce a published number to a stated tolerance.
+- **Red:** wrong layer, wrong scale, wrong position, shuffled inputs — each must degrade.
+- Only then: run your null on the claim you actually care about.
+
+If no reference number exists, say so explicitly and treat every negative result as provisional.
+An unanchored negative about someone else's method is a hypothesis about your own code.
+
 ## The six questions
 
 ### 1. What is the claim, as a falsifiable sentence?
@@ -110,7 +140,8 @@ and notice when a striking result is an *injection* being read as a discovery.
 
 ## The discipline in one line
 
-**Run the control that could kill your own result — and report it when it does.**
+**Verify against a published number first, then run the control that could kill your own result
+— and report it when it does.**
 
 Everything in this repo that looks like a finding was, at some point, a number we had to go
 back and re-measure. Rung 1's headline inverted once because of a stimulus-frequency choice.

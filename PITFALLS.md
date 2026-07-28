@@ -136,3 +136,66 @@ so a later comparison isn't confounded by measurement noise you forgot about.
 While timing these rungs we recorded suspiciously fast runtimes — the environment was missing
 `transformers`, so three rungs crashed and we timed the crash. Redirecting stdout hid it.
 Check exit codes, and sanity-check that a runtime is *physically plausible* for the work done.
+
+## 13. A null with no positive control
+
+The headline pitfall, and the one that cost us most. We ran a mismatch null on a published
+method, got zero excess, and wrote it up as a result about the method. Two bugs in our own
+pipeline: we sampled token positions outside the regime the model was trained on, and we applied
+a scaling correction in the wrong direction.
+
+The scaling bug is the instructive one. We had *empirically verified* that the framework applies
+a √d normaliser internally — a correct premise, separately confirmed — and reasoned from it that
+we should divide the injected vector by √d. Dividing scored −0.737; not dividing scored 0.839
+against a published 0.821. **A verified premise led to a wrong conclusion, and only the
+published anchor caught it.**
+
+Always build the green test first. See [READING_A_PAPER.md](READING_A_PAPER.md), question zero.
+
+## 14. Concluding from too narrow a comparison set
+
+We measured how much per-prompt Jacobians vary in a sparse mixture-of-experts model and found it
+4–6× higher than in dense models — a clean "sparsity breaks this method" story. Then we widened
+the comparison and found a **dense** model in the same table at nearly the same value. Dense
+models alone spanned a 3.3× range; the effect we attributed to sparsity was mostly *model
+family*.
+
+The tell was available before the conclusion: we had six models and compared against three of
+them. Before attributing a difference to the variable you care about, check how much it varies
+among things that *don't* differ on that variable.
+
+The fix that settled it was a **within-family control** — a sparse and a dense model from the
+same family, same recipe, similar size. It reversed the conclusion.
+
+## 15. Aliased submodules stop a model being freed
+
+```python
+stack = model.model.language_model      # alias!
+W_U   = model.get_output_embeddings().weight
+del model                               # frees nothing
+```
+
+`del model` drops one reference while `stack` and `W_U` still pin the parameters. The next large
+model load then OOMs with the previous one still resident. Delete every alias and call
+`gc.collect()` — and print `torch.cuda.memory_allocated()` to prove it actually went.
+
+## 16. float32 accumulation makes cosine exceed 1
+
+Comparing two 4096×4096 matrices by flattened cosine, float32 returned **1.0057**. Over 16.7M
+elements, accumulation error swamps the last digits. Compute similarity of large tensors in
+float64. If a bounded metric leaves its bounds, the arithmetic is wrong, not the finding.
+
+## 17. Chat templates: `tokenize=True` may not return tokens
+
+`tokenizer.apply_chat_template(..., tokenize=True)` can return a `BatchEncoding`, so
+`len(ids)` gives **2** — the number of its keys — and iterating yields key names. Use
+`tokenize=False` to get the string, then tokenize with `add_special_tokens=False`, because the
+rendered template usually already contains `<bos>`. Adding a second one shifts every position
+index by one.
+
+## 18. Vendor formats drift between versions
+
+Gemma Scope 2 stores SAE weights under `w_enc`/`w_dec` (lowercase); the previous release used
+`W_enc`/`W_dec`. `jlens` requires `source_layers` strictly below `target_layer`, so "all layers"
+means `range(n_layers - 1)`. Neither is documented where you would look. Print the actual keys
+and read the actual error rather than assuming continuity with the version you learned on.
