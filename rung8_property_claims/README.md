@@ -15,6 +15,11 @@ rung of the ladder and the first cells of the
 - *Reasoning Models Generate Societies of Thought* (Kim et al., 2026)
 - *When Models Manipulate Manifolds* (Gurnee et al., 2025)
 - Background for the reasoning claims: Raschka, *Build a Reasoning Model from Scratch*.
+- **Background for the post-training claims** (near-required for the workspace cell): Lambert,
+  [*RLHF Book*](https://rlhfbook.com) — **Lecture 6 (DPO)** and **Conversation 2, a case study
+  in DPO for OLMo 3**. The workspace cell below measures what SFT / DPO / RLVR *do to a model's
+  representations*; that course explains what those stages *are* and how they were actually
+  built for this exact model. Read it before deciding what our numbers mean.
 
 ## Build (choose one or more cells)
 
@@ -23,6 +28,15 @@ All on **OLMo-3 / Ministral**, using the companion repos; each has a worked refe
 
 - **Workspace / point-of-view.** Fit lenses across the OLMo-3 post-training ladder; measure how
   far post-training moves the J-space, capability-controlled.
+
+  > Our result: post-training moves the J-space ~31% (cos 0.69 from base) while MMLU is flat to
+  > slightly *down* — a large representational change with no competence gain. **Method sets the
+  > magnitude, not domain:** SFT+DPO moves it ~5× more than RLVR, and varying the RLVR domain at
+  > matched capability adds ~1%. Read against a **per-layer** refit floor (rung 6), not a pooled
+  > one.
+  >
+  > This is why the DPO reading matters: the stage our measurement singles out is the one
+  > Lambert's Conversation 2 walks through building, for this same model.
 - **Introspection.** Inject a concept and test whether the model *reports* it — with the
   strength sweep and asked-vs-neutral contrast that separate introspection from steering.
 - **Societies of thought.** Reproduce the steering accuracy gain — then check it on a *second*

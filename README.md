@@ -167,6 +167,10 @@ What each runnable starter finds, and the null that guards it:
   [*Build an LLM from Scratch*](https://github.com/rasbt/LLMs-from-scratch) and
   [*Build a Reasoning Model from Scratch*](https://github.com/rasbt/reasoning-from-scratch) ·
   Mike X Cohen, [*50 ML projects to understand LLMs*](https://github.com/mikexcohen/ML4LLM_book) (investigate transformer internals as data)
+- **Post-training (the training side of rung 8):** Nathan Lambert,
+  [*RLHF Book*](https://rlhfbook.com) + [course](https://rlhfbook.com/course) — free, 11
+  lectures, and Conversation 2 is a case study in DPO **for OLMo 3**, the model rung 8 measures.
+  Lectures and theory, no exercises; complementary to this repo's runnable projects.
 - **Foundational threads:** [Distill Circuits](https://distill.pub/2020/circuits/) ·
   [Transformer Circuits Thread](https://transformer-circuits.pub/)
 - **Tooling:** [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) ·

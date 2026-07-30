@@ -19,6 +19,19 @@ hand here. This rung is optional if you already know it, and load-bearing if you
   [`rasbt/LLMs-from-scratch`](https://github.com/rasbt/LLMs-from-scratch). Tokenizer →
   attention → pretraining → instruction fine-tuning, all from first principles. This is the
   cleanest bridge into rungs 2–5.
+- **For post-training — the RLHF Book (free) and its course.** Nathan Lambert,
+  *Reinforcement Learning from Human Feedback and LLM Post-Training*
+  ([rlhfbook.com](https://rlhfbook.com), [repo](https://github.com/natolambert/rlhf-book),
+  [course](https://rlhfbook.com/course)). Instruction tuning → reward models → rejection
+  sampling → RL → direct alignment (DPO) → synthetic data → evaluation: 11 lectures with free
+  videos and slides. This is the canonical open reference for the *training* side of everything
+  rung 8 measures, written by someone who builds OLMo's post-training. Two pieces are near-
+  required reading for rung 8: **Lecture 6 (Direct Preference Optimization)** and
+  **Conversation 2, a case study in DPO for OLMo 3**.
+
+  It is lectures and theory, with no coding exercises — which is exactly why it pairs well with
+  this repo rather than overlapping it.
+
 - **For the reasoning claims — Build a Reasoning Model from Scratch.** Sebastian Raschka,
   *Build a Reasoning Model (From Scratch)* +
   [`rasbt/reasoning-from-scratch`](https://github.com/rasbt/reasoning-from-scratch). Chain-of-
