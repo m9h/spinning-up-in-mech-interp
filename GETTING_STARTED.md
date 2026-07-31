@@ -69,6 +69,38 @@ correct behaviour: a null is a distribution scattered around zero, which is why 
 compare against it rather than quoting it as a constant. If a null ever approaches the signal,
 that is a finding, not a bug — investigate it.
 
+## Track your runs (five lines, and you stop losing results)
+
+Every rung produces numbers you will want to compare — across library versions, across a fix you
+made, across the null you added afterwards. Shell output does not survive that.
+
+[**trackio**](https://huggingface.co/docs/trackio/index) is Hugging Face's free experiment
+tracker: local-first, no account, a Gradio dashboard, and API-compatible with Weights & Biases,
+so it is a drop-in:
+
+```python
+import trackio as wandb                      # yes, that import line is the whole migration
+
+wandb.init(project="spinning-up", name="rung4-induction",
+           config={"model": "gpt2", "batch": 32, "seq": 64, "dtype": "float32"})
+wandb.log({"induction_top": 0.926, "ablate_induction": 6.35, "ablate_random": 0.23})
+wandb.finish()
+```
+
+`pip install trackio`, then `trackio show` for the dashboard. Logs go to **SQLite** (freezable to
+Parquet) and there is a **CLI that queries the SQL directly**, which is what makes it usable by
+scripts and agents rather than only by a human staring at charts.
+
+**Log the config, not just the metric.** Almost every confusing result in
+[PITFALLS.md](PITFALLS.md) — dtype, batch size, seed count, layer index, token position — is a
+*config* difference that looked like a finding. If the config is in the row, the confusion lasts
+a minute instead of an afternoon.
+
+> We did not do this. This project ran 154 checkpoints × 10 seeds × 4 model sizes, dtype
+> controls, and multi-stage cloud jobs entirely through JSONL files and shell logs — and lost a
+> completed 27-billion-parameter stage to an exception that fired after it. Five lines would
+> have kept it.
+
 ## Hardware
 
 Everything above runs on a laptop CPU. A GPU makes the rungs faster but changes nothing. The

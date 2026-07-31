@@ -199,3 +199,18 @@ Gemma Scope 2 stores SAE weights under `w_enc`/`w_dec` (lowercase); the previous
 `W_enc`/`W_dec`. `jlens` requires `source_layers` strictly below `target_layer`, so "all layers"
 means `range(n_layers - 1)`. Neither is documented where you would look. Print the actual keys
 and read the actual error rather than assuming continuity with the version you learned on.
+
+## 19. An exception at the end discards everything before it
+
+A multi-stage run computed its two expensive stages — two 27B models, most of an hour — and then
+raised on a trivial mistake in the cheap scoring stage at the end. Nothing had been written to
+disk, so all of it was lost and had to be recomputed.
+
+Persist after each expensive stage, not at the end: write a checkpoint, and **commit it** if you
+are on a remote store that requires an explicit commit (Modal Volumes do). Then make the script
+resume from that checkpoint, so the retry costs the cheap stage only.
+
+The general rule: **the cost of a failure should be proportional to the cost of the thing that
+failed**, not to everything that ran before it. Logging metrics as you go (see
+[GETTING_STARTED.md](GETTING_STARTED.md)) gives you the same property for free — even a failed
+run leaves its numbers behind.
