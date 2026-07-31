@@ -35,10 +35,14 @@ hand here. This rung is optional if you already know it, and load-bearing if you
 - **For actually running post-training — TRL and the Hugging Face *Training Agents* series.**
   [TRL](https://github.com/huggingface/trl) v1.0 is a unified post-training stack covering
   **SFT, reward modelling, DPO and GRPO** — i.e. every stage rung 8 measures, in runnable code.
-  The [*Training Agents*](https://www.youtube.com/live/ztdTed5egrM) live classes teach it
-  hands-on (class 2 distillation, class 3 reinforcement learning / GRPO), and the LLM Course has
-  a written [Implementing GRPO in TRL](https://huggingface.co/learn/llm-course/en/chapter12/4)
-  chapter.
+  Written and durable: the [smol-course](https://huggingface.co/learn/smol-course/unit0/1)
+  (instruction tuning → SFT → preference alignment → evaluation, all via TRL), the
+  [TRL docs](https://huggingface.co/docs/trl/en/index), and
+  [Implementing GRPO in TRL](https://huggingface.co/learn/llm-course/en/chapter12/4).
+  Hugging Face also runs a *Training Agents* live class series covering the same ground
+  (distillation, RL/GRPO, fine-tuning a coding agent for continual learning); the streams are
+  announced on their Discord rather than a stable index, so the course pages above are the
+  reliable entry point.
 
   GRPO matters specifically for rung 8: it is the RLVR family, and our result is that **RLVR
   barely moves the J-space** (~6% from base) compared with SFT+DPO (~31%). To have a view on
