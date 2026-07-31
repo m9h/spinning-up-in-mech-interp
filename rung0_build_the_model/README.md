@@ -32,6 +32,18 @@ hand here. This rung is optional if you already know it, and load-bearing if you
   It is lectures and theory, with no coding exercises — which is exactly why it pairs well with
   this repo rather than overlapping it.
 
+- **For actually running post-training — TRL and the Hugging Face *Training Agents* series.**
+  [TRL](https://github.com/huggingface/trl) v1.0 is a unified post-training stack covering
+  **SFT, reward modelling, DPO and GRPO** — i.e. every stage rung 8 measures, in runnable code.
+  The [*Training Agents*](https://www.youtube.com/live/ztdTed5egrM) live classes teach it
+  hands-on (class 2 distillation, class 3 reinforcement learning / GRPO), and the LLM Course has
+  a written [Implementing GRPO in TRL](https://huggingface.co/learn/llm-course/en/chapter12/4)
+  chapter.
+
+  GRPO matters specifically for rung 8: it is the RLVR family, and our result is that **RLVR
+  barely moves the J-space** (~6% from base) compared with SFT+DPO (~31%). To have a view on
+  why, you need to know what GRPO actually does to a model.
+
 - **For the reasoning claims — Build a Reasoning Model from Scratch.** Sebastian Raschka,
   *Build a Reasoning Model (From Scratch)* +
   [`rasbt/reasoning-from-scratch`](https://github.com/rasbt/reasoning-from-scratch). Chain-of-

@@ -65,6 +65,18 @@ All on **OLMo-3 / Ministral**, using the companion repos; each has a worked refe
 
   Write-ups: `tri-lens/results/PHASE1_RESULT.md`, `PHASE2_RESULT.md`.
 
+### Build your own ladder, then measure it
+
+Every cell above reads AI2's *pre-trained* OLMo-3 ladder. You can also close the loop yourself:
+[TRL](https://github.com/huggingface/trl) v1.0 gives you SFT, reward modelling, DPO and GRPO in
+one stack, so on a small open model you can **train your own miniature post-training ladder**
+and then run rung 6's lenses and rung 8's controls on the checkpoints you produced.
+
+That is the strongest version of this rung, because you control the independent variable. Our
+finding — that method (SFT+DPO vs RLVR) sets how far the J-space moves, while task *domain*
+adds ~1% at matched capability — is exactly the kind of claim a self-built ladder can check
+without asking anyone for access.
+
 ## The control (the whole point)
 
 Every cell ships its null, and **a negative is a first-class result**:

@@ -167,6 +167,11 @@ What each runnable starter finds, and the null that guards it:
   [*Build an LLM from Scratch*](https://github.com/rasbt/LLMs-from-scratch) and
   [*Build a Reasoning Model from Scratch*](https://github.com/rasbt/reasoning-from-scratch) ·
   Mike X Cohen, [*50 ML projects to understand LLMs*](https://github.com/mikexcohen/ML4LLM_book) (investigate transformer internals as data)
+- **Post-training, hands-on:** [TRL](https://github.com/huggingface/trl) v1.0 (SFT + reward
+  modelling + DPO + GRPO in one stack) and Hugging Face's *Training Agents* live classes.
+  The three layers fit together: Lambert's course is the **theory** of post-training, TRL is the
+  **implementation**, and this repo is the **measurement** — what those stages do to a model's
+  representations, with a control attached.
 - **Post-training (the training side of rung 8):** Nathan Lambert,
   [*RLHF Book*](https://rlhfbook.com) + [course](https://rlhfbook.com/course) — free, 11
   lectures, and Conversation 2 is a case study in DPO **for OLMo 3**, the model rung 8 measures.
