@@ -192,3 +192,20 @@ What each runnable starter finds, and the null that guards it:
 
 Apache-2.0. Course text CC BY 4.0. An
 [Orthogonal Research and Education Lab (OREL)](https://orthogonal-research.github.io/) project.
+
+## Related
+
+Part of one program — a controls-first, open-weights attempt to make the 2025–26 interpretability
+claims checkable:
+
+| repo | what |
+|---|---|
+| [spinning-up-in-mech-interp](https://github.com/m9h/spinning-up-in-mech-interp) | the **curriculum** — 8 rungs, 6 runnable on a laptop, each ending in its own null |
+| [jacobian-lens](https://github.com/m9h/jacobian-lens) | the **research** — OLMo post-training ladder, metacognition, the Consciousness-Indicator Scorecard |
+| [tri-lens](https://github.com/m9h/tri-lens) | do **three instruments agree** about the same activation? |
+| [controls-and-trajectories](https://github.com/m9h/controls-and-trajectories) | the **published datasets** — nulls and developmental trajectories |
+
+Datasets: [induction-emergence-pythia](https://huggingface.co/datasets/mhough/induction-emergence-pythia) ·
+[inceptionv1-tuning-atlas](https://huggingface.co/datasets/mhough/inceptionv1-tuning-atlas) ·
+[trilens-instrument-agreement](https://huggingface.co/datasets/mhough/trilens-instrument-agreement) ·
+[olmo3-jacobian-lenses](https://huggingface.co/mhough/olmo3-jacobian-lenses)
