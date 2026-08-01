@@ -132,6 +132,14 @@ acknowledged by the field and unfilled.
 **Attribution graphs (2025).** The authors themselves document unfaithfulness — graphs that are
 clean, causal-looking and wrong. Read the faithfulness validation before the case studies.
 
+**Emergence claims in RL'd reasoning models** (e.g. *Ring-Zero*, 2026, reporting emergent
+self-verification and parallel reasoning at 1T parameters). Ask question 2 first: is the
+evidence *behavioural* (the model writes text that looks like self-checking) or
+*representational* (a measured internal mechanism)? Those are routinely conflated, and the
+second does not follow from the first. Rung 4 shows why it matters — an induction *score* is
+correlational, and the top-scoring heads had zero causal role one checkpoint before they had a
+decisive one.
+
 **The 2025–26 property papers** (global workspace, introspection, societies of thought). These
 make the largest claims on the least accessible systems. Apply questions 3 and 4 hardest here,
 and notice when a striking result is an *injection* being read as a discovery.

@@ -14,6 +14,11 @@ rung of the ladder and the first cells of the
 - *Emergent Introspective Awareness…* (Lindsey, 2025)
 - *Reasoning Models Generate Societies of Thought* (Kim et al., 2026)
 - *When Models Manipulate Manifolds* (Gurnee et al., 2025)
+- [*Ring-Zero: Scaling Zero RL to a Trillion Parameters for Emergent Reasoning*](https://arxiv.org/abs/2607.12395)
+  (Tang et al., 2026) — zero-RL (RLVR with no SFT cold start) at 1T parameters, reporting
+  **emergent self-verification, parallel reasoning and structured formatting** "without explicit
+  engineering". Weights for the family are open (`inclusionAI/Ring-1T`), though 1T is out of
+  reach for this curriculum's hardware.
 - Background for the reasoning claims: Raschka, *Build a Reasoning Model from Scratch*.
 - **Background for the post-training claims** (near-required for the workspace cell): Lambert,
   [*RLHF Book*](https://rlhfbook.com) — **Lecture 6 (DPO)** and **Conversation 2, a case study
@@ -76,6 +81,31 @@ That is the strongest version of this rung, because you control the independent 
 finding — that method (SFT+DPO vs RLVR) sets how far the J-space moves, while task *domain*
 adds ~1% at matched capability — is exactly the kind of claim a self-built ladder can check
 without asking anyone for access.
+
+### A live tension worth working through
+
+Ring-Zero and our own OLMo measurements appear to disagree, and reconciling them is the best
+exercise on this rung.
+
+- **Their claim:** self-verification *emerges from RL alone* — zero-RL, no SFT stage.
+- **Our measurement:** RLVR moves the J-space only ~6% from base (SFT+DPO ~31%), and the covert
+  error signal becomes *reportable* at **SFT** — verbal self-evaluation rises 0.51 → 0.71 there,
+  while the RL-Zero arms stay at 0.52–0.55.
+
+Four candidate resolutions, and picking between them is the skill this rung teaches:
+
+1. **Both true, different things.** Behaviour can change while the workspace does not move much
+   — the capability-vs-viewpoint distinction the workspace cell already draws.
+2. **Scale-gated.** Our ladder is 7B; theirs is 1T. Emergence claims are often scale claims.
+3. ★ **Different evidence types.** "Emergent self-verification" as *observed in generated text*
+   is a **behavioural** claim; our AUROC and P(True) are **representational** claims. Apply
+   [question 2](../READING_A_PAPER.md) — a model that writes "let me double-check" has not
+   thereby been shown to *have* a verification mechanism.
+4. **The comparison is not matched.** Zero-RL skips SFT entirely, so "RL vs SFT+RL" and
+   "RL-after-SFT vs SFT" are different contrasts.
+
+The exercise: state which measurement would distinguish (1) from (3), then say honestly whether
+any published artifact lets you run it.
 
 ## The control (the whole point)
 
