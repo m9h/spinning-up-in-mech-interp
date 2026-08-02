@@ -91,6 +91,10 @@ wandb.finish()
 Parquet) and there is a **CLI that queries the SQL directly**, which is what makes it usable by
 scripts and agents rather than only by a human staring at charts.
 
+One operational gotcha: trackio's init state is **thread-affine**. Initialise on a worker
+thread and log from the main thread and you get *"Call trackio.init() before trackio.log()"*.
+If you wrap it in a watchdog thread, init and log on the same one.
+
 **Log the config, not just the metric.** Almost every confusing result in
 [PITFALLS.md](PITFALLS.md) — dtype, batch size, seed count, layer index, token position — is a
 *config* difference that looked like a finding. If the config is in the row, the confusion lasts

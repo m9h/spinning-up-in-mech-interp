@@ -39,7 +39,7 @@ Practical form:
 If no reference number exists, say so explicitly and treat every negative result as provisional.
 An unanchored negative about someone else's method is a hypothesis about your own code.
 
-## The six questions
+## The seven questions
 
 ### 1. What is the claim, as a falsifiable sentence?
 
@@ -99,7 +99,25 @@ them. "The negation was comparably effective" is a refutation, not a footnote.
 - **Multiple comparisons**: "the best of 144 heads" is a maximum over 144 draws. Compare it to
   the maximum of the null, not the null's mean.
 
-### 6. Would it survive being run again — by someone else, on something else?
+### 6. Is the comparison *within-item* or *between-item*?
+
+When a paper compares two conditions, ask whether the same items appear in both — and whether
+the statistic is computed per item and then averaged, or averaged first and then compared.
+
+The two can differ dramatically. One analysis found correct reasoning traces more diverse than
+**length-matched** incorrect ones (+0.0110, 1,003 pairs, surviving Bonferroni across four
+domains) — apparently solid. Re-run holding the *problem itself* fixed, comparing each problem's
+correct traces against its own incorrect ones, it fell to **+0.0023**, with the between-problem
+estimate sitting **3.1 SE outside** that interval. The effect was between-problem structure, not
+a property of correctness.
+
+This applies to our own work: our ladder comparisons average the Jacobians *before* comparing
+them, which weights by magnitude, where the within-item version would compare per prompt and
+then average. We have not measured the gap, and say so.
+
+**Ask: does the design hold the item fixed, or only the condition?**
+
+### 7. Would it survive being run again — by someone else, on something else?
 
 - **n = 1?** One model, one seed, one prompt set is a hypothesis.
 - **Are the artifacts public?** Not the code — the *outputs*: weights, checkpoints, scores.

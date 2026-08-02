@@ -214,3 +214,68 @@ The general rule: **the cost of a failure should be proportional to the cost of 
 failed**, not to everything that ran before it. Logging metrics as you go (see
 [GETTING_STARTED.md](GETTING_STARTED.md)) gives you the same property for free — even a failed
 run leaves its numbers behind.
+
+## 20. Asymmetric filtering: a filter that bites one condition harder than the other
+
+Any filter that drops low-signal items will drop *most* from whichever arm has the least
+signal. That is not neutral data cleaning — it deletes one condition's lower tail and
+manufactures an effect.
+
+A concrete case: an analysis excluded traces with too few segments to score. The intervention
+being studied *created* segments, so the drop rate collapsed with dose — **95 of 200 baseline
+traces discarded (47.5%) versus 8 at the top dose (4%)**. Nearly half the baseline was deleted,
+and precisely its least diverse half. Reported diversity fell with dose. The truth was that it
+**rises**.
+
+**Always report the drop rate per arm.** If it differs, the filter is part of your result. Where
+the measure allows it, score the excluded items at their floor value instead of dropping them.
+
+*Found by the [societies-of-thought](https://github.com/m9h/societies-of-thought) agent, whose
+retraction of that result is the reason this entry exists.*
+
+## 21. Dividing by a covariate is not controlling for it
+
+Normalising a metric by something that varies between your conditions feels like a control. It
+usually is not.
+
+A diversity score was normalised by `log2(n_segments)` on the assumption that this removed the
+length dependence. The effect measured **−0.0186**, with a confidence interval excluding zero,
+and it was stable across resampling, across sample size, and across **two different embedders**.
+Under **1:1 length matching** it fell to **−0.0003** — a 99% shrinkage.
+
+Division rescales; it does not equalise the distribution. If two arms differ in length, norm, or
+depth profile, **match them** (pair items of equal length) or model the covariate explicitly.
+Cosine-type geometry measures are exposed to the same class of problem whenever arms differ in
+magnitude or trace length.
+
+## 22. Robustness checks that cannot see the confound you have
+
+The sharpest methodological lesson here, and both projects hit it independently.
+
+You suspect an effect might be spurious, so you re-run it: different seeds, different sample
+sizes, different embedder. It holds every time. You write "SIGN STABLE across 3 runs" and move
+on. **But if none of those variations touches the suspected confound, three consistent runs of a
+confounded estimator are still confounded.** Consistency is not validity.
+
+Our own instance, from the other direction: we reported a 4–6× MoE-sparsity penalty and checked
+it across models and across two different measurement methods — but never across model *family*,
+which is where the confound lived. Widening to a within-family control reversed the conclusion
+(see #14).
+
+**Before running a robustness check, write down which confound it could move.** If the answer is
+"none", it is reassurance, not evidence.
+
+## 23. Per-item accuracy is often bimodal, not binomial
+
+Sampling a model N times per problem and treating correctness as a binomial draw is a common
+default and frequently wrong. On one GPQA run, only **168 of 767 problems** produced both a
+correct and an incorrect answer — 388 were always right, 211 always wrong. Under independence at
+that accuracy, ~94% of problems should have been mixed; 22% were.
+
+The model largely *knows* a problem or does not, and resampling rarely changes it. Consequences:
+a probe trained on pooled samples mostly learns **which problems are easy**, not which *answers*
+are right — between-item structure wearing the costume of a within-item signal. That is a
+candidate explanation for why our own error-monitoring signal works across questions and fails
+at selecting among samples of the same question.
+
+*Both from the societies-of-thought agent's GPQA analysis.*
