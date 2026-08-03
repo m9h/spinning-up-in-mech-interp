@@ -152,6 +152,23 @@ one timescale, a post-training viewpoint shift at another, and a covert error si
 out to be present in pretraining and made *reportable* weeks later by fine-tuning. That result
 is unreadable without the ladder of levels.
 
+**A worked example from a field that does this properly.** Sapolsky gives the argument; the
+Allen Institute gives a demonstration. **Arkhipov**'s group built a model of mouse primary
+visual cortex at *two levels of granularity at once* — biophysically detailed and simplified
+point-neuron — over the same ~230k-neuron circuit, validated against the same publicly released
+Brain Observatory recordings, with the simulator (**BMTK**) and the network format (**SONATA**)
+released as open tooling.
+
+Interpretability has nothing equivalent. We have the full model and we have toy models, but
+almost nobody builds the *same* mechanism at two levels of abstraction and asks what each level
+captures and what it discards. Rung 3's toy superposition model and a real transformer are two
+levels — and no one has systematically asked which phenomena survive the reduction. That is a
+methodology gap, not a compute gap.
+
+*(Arkhipov is also a co-author on Mineault et al.'s NeuroAI-for-AI-Safety white paper and is at
+the institution running OpenScope — the NeuroAI-safety and open-neural-data communities are the
+same people.)*
+
 **Companion:** Sapolsky, *Determined* (2023), for session 2. If human authorship of our own
 reasons is substantially constructed after the fact — which is Nisbett & Wilson's finding with
 the philosophy attached — then "the model confabulates its reasoning" stops being a
