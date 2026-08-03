@@ -80,6 +80,7 @@ verified end-to-end on a laptop CPU in under 25 seconds each.
 | [**GLOSSARY.md**](GLOSSARY.md) | the vocabulary of the papers — residual stream, QK/OV, superposition, SAE, patching |
 | [**READING_A_PAPER.md**](READING_A_PAPER.md) | six questions for reading an interpretability result critically |
 | [**PITFALLS.md**](PITFALLS.md) | every trap that cost us a wrong result while building this |
+| [**ECOSYSTEM.md**](ECOSYSTEM.md) | what is live, what died (Microscope, Distill, ARENA's old URLs), the benchmarks you can enter, and the communities that will take a contribution |
 | [**reading-group/**](reading-group/) | **the Cognitive Hexagon reading group** — read the source construct before the AI paper that borrows it |
 
 ```bash
@@ -192,7 +193,7 @@ What each runnable starter finds, and the null that guards it:
 ## License
 
 Apache-2.0. Course text CC BY 4.0. An
-[Orthogonal Research and Education Lab (OREL)](https://orthogonal-research.github.io/) project.
+[Orthogonal Research and Education Lab (OREL)](https://orthogonal-research-lab.github.io/) project.
 
 ## Related
 

@@ -432,5 +432,5 @@ are reachable.
 - Pairs naturally with the [technique ladder](../README.md) — rung 8 adjudicates the same papers
   empirically, this reads what they are claiming.
 
-*An [Orthogonal Research and Education Lab (OREL)](https://orthogonal-research.github.io/)
+*An [Orthogonal Research and Education Lab (OREL)](https://orthogonal-research-lab.github.io/)
 activity, hosted alongside the curriculum.*

@@ -54,7 +54,7 @@ was "comparably effective") — you learn it here on open weights.
 ### Why this rung exists
 
 We are not the first to notice this gap — we are the first to make it a runnable exercise.
-[ARENA §1.3.3](https://learn.arena.education/chapter1_transformer_interp/13_sae_intro/), the
+[ARENA chapter 1, "Interpretability with SAEs"](https://www.arena.education/chapter1), the
 best SAE course material available, states the problem exactly, in a **bonus** bullet:
 
 > they found that autointerp on randomized SAE latents performed better than one might expect,
@@ -80,6 +80,14 @@ not as something that teaches you to run your own.
 So the default path through the ecosystem is *browse features → read the AI-written label →
 steer → be impressed*. This rung is the missing step: **check**.
 
+**And there is now a tool for the label half of it.** [Delphi](https://github.com/EleutherAI/delphi)
+(EleutherAI) generates feature explanations *and scores them* — **detection** (given the
+explanation, does a model correctly predict whether a whole sentence activates the feature?) and
+**fuzzing** (the same at the level of individual highlighted tokens). Both are cheap. If you are
+going to trust a label — and [Transluce Monitor](https://monitor.transluce.org) now ships
+**~917,000** of them for Llama-3.1-8B — this is how you check one. See
+[ECOSYSTEM.md](../ECOSYSTEM.md).
+
 ## Are learned features necessary? (a live question, 2026)
 
 This rung's premise — superposed features can't be read off neurons, so learn a dictionary — is
@@ -89,6 +97,13 @@ privileged basis (MLP *activations*, not outputs) and a stronger attribution met
 neurons give circuits as sparse and faithful as transcoder-based ones — reproducing three case
 studies that had only been shown with learned features. See [rung 7](../rung7_attribution_graphs/)
 for what that does and does not overturn.
+
+**Independent convergence, worth weighing.** The
+[Mechanistic Interpretability Benchmark](https://arxiv.org/abs/2504.13151) (MIB, ICML 2025)
+reached the same verdict a year earlier by a completely different route — a held-out private test
+set with public leaderboards — reporting that for causal variable localization, **"SAE features
+are not better than neurons."** Two independent methods, same negative result. That is about as
+strong as evidence gets here.
 
 It does not touch what you did *here*: steering along a single interpretable direction, with a
 null. But it should change what you require of the next paper claiming SAEs were **necessary** —

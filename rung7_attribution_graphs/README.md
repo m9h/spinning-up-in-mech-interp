@@ -75,6 +75,15 @@ entirely to the first. Separate them and most of it belongs to the second. That 
 [PITFALLS](../PITFALLS.md) **#14 — too-narrow comparison set** — operating at the scale of a
 research program rather than a script, and it is exactly what a well-chosen baseline is for.
 
+**It was found twice, independently.** The
+[Mechanistic Interpretability Benchmark](https://arxiv.org/abs/2504.13151) (MIB, ICML 2025) got
+there first by benchmarking rather than by building — two tracks, 4 tasks, 5 models, **a private
+test set and public HuggingFace leaderboards** — and reported that for causal variable
+localization, **"SAE features are not better than neurons."** Convergent negatives from
+unrelated methods are the strongest signal this field produces. MIB is also somewhere you can
+*enter* rather than only read: upload a circuit or a featurizer and it is scored on data you
+cannot see. See [ECOSYSTEM.md](../ECOSYSTEM.md) §3.
+
 **Do not overclaim it, either.** Superposition is not refuted — rung 3's toy model is a
 mathematical fact. What is refuted is the *inference from* superposition: that you must undo it
 to trace a circuit. And Transluce state the remaining case for learned features themselves —

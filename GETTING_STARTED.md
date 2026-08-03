@@ -123,6 +123,9 @@ published openly, so you can inspect and verify them without reproducing them.
 
 ## When something breaks
 
+If a **link** is dead rather than the code, check [`ECOSYSTEM.md`](ECOSYSTEM.md) — it tracks what
+went offline (OpenAI Microscope, ARENA's old section URLs) and what replaced it.
+
 Check [`PITFALLS.md`](PITFALLS.md) — it lists every trap that cost us a wrong result while
 building this, including the two that briefly inverted our own published numbers.
 
