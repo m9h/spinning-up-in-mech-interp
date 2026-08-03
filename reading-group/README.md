@@ -1,6 +1,11 @@
 # The Cognitive Hexagon Reading Group
 
-**Read the source before the borrowing.**
+**We make sure exciting papers have public open-source implementations and training
+documentation. Read the source before the borrowing; ship an artifact after it.**
+
+A session is not finished when the discussion ends. It is finished when the paper has, in
+public: a **runnable implementation** on open weights, **training documentation** someone else
+can follow, and — the part usually missing — **the control that could falsify it.**
 
 Every large interpretability claim of 2025–26 imports a construct from cognitive science — a
 *global workspace*, *introspection*, *metacognition*, a *society of mind*. Most reading groups
@@ -20,6 +25,25 @@ being redrawn right now, at speed, largely by one side.** Each session takes one
 foundational text and the 2026 claim together, and asks a single question:
 
 > *Is the AI paper using the construct, or using its name?*
+
+## What a session ships
+
+| output | why it is the point |
+|---|---|
+| **Open implementation** | on open weights, because the source model is usually closed |
+| **Training/method documentation** | the reproduction recipe, including the parameters that are load-bearing and undocumented |
+| **A control** | most papers ship the technique without the null; that gap is the contribution |
+| **An honest status** | reproduced / refuted / inconclusive-under-control — negatives published |
+
+### Already shipped, as the template
+
+| paper | what was missing | what we published |
+|---|---|---|
+| Natural Language Autoencoders (2026) | no evaluation suite, no baselines | a red-green harness verified against the authors' own worked example (`fve` 0.839 vs 0.821) — after it caught **two bugs of ours** that had produced a false negative |
+| Verbalizable Representations / J-space (2026) | closed model; reviewers could not test it | full replication on OLMo-3, plus the six tests Dehaene & Naccache proposed and nobody had run |
+| In-Context Learning and Induction Heads (2022) | 34 **internal** models; per-head scores never released | the first public per-head scores across a full checkpoint sequence, with the causal ablation |
+| Distill *Circuits* (2020) | argued in pictures; no numbers, no null, Microscope offline since 2025 | 5,808 units quantified, with two null distributions |
+| Societies of Thought (2026) | no code, no data | an adversarial replication — the accuracy gain **reverses** on a second benchmark |
 
 ## Sessions
 
@@ -92,6 +116,11 @@ apply — and does the paper run it?
 
 ## How to run it
 
+- **Every session names its artifact before it starts.** "What will exist publicly that did not
+  exist last week?" If the answer is "a better understanding", the session is under-specified.
+- **Find the gap first.** Before implementing, check what is genuinely missing: the substrate
+  (weights, SAEs, checkpoints) is usually public, and the *control layer* usually is not. Do not
+  re-release what exists; publish what does not.
 - **Two texts per session, source first.** The order matters; reading the AI paper first frames
   the construct in its terms.
 - **Someone must argue for the borrowing.** These claims are not silly, and a session that only
