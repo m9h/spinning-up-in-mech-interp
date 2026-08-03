@@ -327,6 +327,30 @@ imported constructs: Is the source theory contested in its own field? Is the ope
 the source's, or a new one wearing the same word? Would the source discipline's own control
 apply — and does the paper run it?
 
+## A standing resource: the Simons Institute
+
+Berkeley's [Simons Institute](https://simons.berkeley.edu/programs/special-year-large-language-models-transformers-part-1)
+ran a **Special Year on Large Language Models and Transformers** — Part 1 Aug–Dec 2024, Part 2
+spring 2025, organised by Barak, Choi, Goel, Goldwasser, Rush and Vazirani. One of its four
+stated strands is *"how LLMs inform theories of language, neuroscience, and human cognition"* —
+the hexagon, named by a theory-of-computing institute — alongside strands on interpretability,
+alignment and safety.
+
+Two things make it worth building on rather than merely citing:
+
+- **It has already happened, and it is archived.** Workshop talks are recorded and posted, so
+  the material is available on demand rather than requiring attendance. A session can assign a
+  talk the way it assigns a paper.
+- **★ It is durable, which almost nothing else here is.** This syllabus keeps running into rot:
+  OpenAI Microscope has returned 503 since early 2025, taking the visual layer of the *Zoom In*
+  paper with it; Neuronpedia's documentation admits it is stale since 2024 and has no page at all
+  for tools it ships. A recorded, indexed, permanently hosted archive is a different class of
+  artifact. If this group wants its own outputs to survive, that is the model — and it is the
+  same argument as the one for publishing implementations rather than discussion notes.
+
+It is also in Berkeley, which for a San Francisco group means the people organising and speaking
+are reachable.
+
 ## How to run it
 
 - **Every session names its artifact before it starts.** "What will exist publicly that did not
