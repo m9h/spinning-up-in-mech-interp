@@ -94,7 +94,8 @@ further thinking would have caught it. Only the published anchor did.
 
 ## Sessions
 
-Each is one foundational reading, one recent AI paper, and one control — a result that
+Eight edges, plus a synthesis. Each session is one foundational reading, one recent AI paper,
+and one control — a result that
 constrains how much weight the analogy can bear.
 
 ### 1. Neuroscience ⇄ AI — the global workspace
@@ -155,7 +156,36 @@ constrains how much weight the analogy can bear.
   learning does, while task capability stays flat — a change in stance, not competence.
 - **Session task:** what would an anthropology of model post-training even measure?
 
-### 8. Methods — telling a faithful borrowing from a name
+### 8. Psychology ⇄ AI, done properly — run the paradigm on both
+The syllabus above is adversarial by construction: every session pairs a claim with a control
+that constrains it. That is a distortion if it is all we read. **There is an existing literature
+that does this well, and it should be the standard the others are measured against.**
+
+- **Source + claim in one:** Dasgupta, Lampinen, Chan, Creswell, Kumaran, **McClelland** & Hill,
+  *Language models show human-like content effects on reasoning tasks*
+  ([arXiv 2207.07051](https://arxiv.org/abs/2207.07051)). Content effects — that believable
+  conclusions are endorsed more readily than logically equivalent unbelievable ones — are a
+  classic finding from Wason, Evans and Johnson-Laird. The paper takes the *human paradigm*, runs
+  it on models, and compares against *human data*.
+- **Companion:** *A Systematic Comparison of Syllogistic Reasoning in Humans and Language Models*
+  ([arXiv 2311.00445](https://arxiv.org/abs/2311.00445)).
+- **Background:** McClelland & Rumelhart, *Parallel Distributed Processing* (1986) — the origin
+  of the connectionist program, itself built at the psychology/AI/neuroscience intersection this
+  hexagon describes.
+
+**Why this is the methodological anchor.** Most papers that invoke a cognitive construct never
+run the human side at all — they borrow the *name* and test only the model. Comparing to human
+subjects requires reproducing the paradigm on both, which is the reproduction argument extended:
+you need the model runnable *and* the human data available, or the comparison is rhetorical.
+
+**Session task:** take one claim from sessions 1–3 and design its human-subject counterpart. What
+would the human version of "the workspace covertly encodes its own errors" actually be? (It
+exists: it is meta-d′, and psychology has been measuring it since the 1970s.)
+
+*Local note: McClelland's Center for Mind, Brain, Computation and Technology is at Stanford —
+this is a Bay Area conversation that can be had in person rather than only through papers.*
+
+### 9. Methods — telling a faithful borrowing from a name
 Synthesis. Working from [`READING_A_PAPER.md`](../READING_A_PAPER.md), build a checklist for
 imported constructs: Is the source theory contested in its own field? Is the operationalisation
 the source's, or a new one wearing the same word? Would the source discipline's own control
