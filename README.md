@@ -80,6 +80,7 @@ verified end-to-end on a laptop CPU in under 25 seconds each.
 | [**GLOSSARY.md**](GLOSSARY.md) | the vocabulary of the papers — residual stream, QK/OV, superposition, SAE, patching |
 | [**READING_A_PAPER.md**](READING_A_PAPER.md) | six questions for reading an interpretability result critically |
 | [**PITFALLS.md**](PITFALLS.md) | every trap that cost us a wrong result while building this |
+| [**reading-group/**](reading-group/) | **the Cognitive Hexagon reading group** — read the source construct before the AI paper that borrows it |
 
 ```bash
 pip install -r requirements.txt && ./verify_all.sh
