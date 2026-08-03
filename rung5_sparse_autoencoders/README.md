@@ -80,6 +80,20 @@ not as something that teaches you to run your own.
 So the default path through the ecosystem is *browse features → read the AI-written label →
 steer → be impressed*. This rung is the missing step: **check**.
 
+## Are learned features necessary? (a live question, 2026)
+
+This rung's premise — superposed features can't be read off neurons, so learn a dictionary — is
+**contested for circuit tracing**. Transluce's
+[*Circuits Are Sparse in the Neuron Basis*](https://arxiv.org/abs/2601.22594) shows that with a
+privileged basis (MLP *activations*, not outputs) and a stronger attribution method (RelP), raw
+neurons give circuits as sparse and faithful as transcoder-based ones — reproducing three case
+studies that had only been shown with learned features. See [rung 7](../rung7_attribution_graphs/)
+for what that does and does not overturn.
+
+It does not touch what you did *here*: steering along a single interpretable direction, with a
+null. But it should change what you require of the next paper claiming SAEs were **necessary** —
+ask what neuron baseline it ran, and with which attribution method.
+
 ## Toward the recent papers
 
 SAEs are the feature-finder behind the society-of-thought steering claim (rung 8) and a cousin
