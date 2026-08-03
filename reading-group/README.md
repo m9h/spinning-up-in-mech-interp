@@ -126,8 +126,13 @@ reasons is substantially constructed after the fact — which is Nisbett & Wilso
 the philosophy attached — then "the model confabulates its reasoning" stops being a
 disqualifying objection and becomes a *comparison*.
 
-*Local note: Sapolsky and McClelland are both at Stanford. This syllabus has two of its anchors
-within a few miles.*
+*Local note: this syllabus is unusually local. **Stanford** — McClelland (Center for Mind,
+Brain, Computation and Technology) and Sapolsky. **Berkeley** — Gopnik (cultural technologies),
+Piantadosi (Computation and Language Lab), Olshausen (Redwood Center for Theoretical
+Neuroscience), and Steinhardt, whose function-vector-head result is the live dispute cited at
+rung 4. The Simons Institute is running a **Special Year on Large Language Models and
+Transformers** that several of them are part of. These are conversations available in person
+rather than only through papers.*
 
 ## Sessions
 
@@ -183,6 +188,10 @@ constrains how much weight the analogy can bear.
 - The weakest edge, and worth saying so. The 2026 workspace paper turns on *verbalizability* —
   what a representation is "disposed to say" — yet the linguistics of production (Levelt's
   speaking model; the formulation/articulation split) is almost never cited.
+- **Reading:** **Piantadosi** (Berkeley, Computation and Language Lab) on what language models
+  do and do not settle about human language learning — including the deliberately provocative
+  case that they refute the poverty-of-the-stimulus argument. This is the edge where the AI side
+  has been *least* willing to engage the discipline it is making claims about.
 - **Session task:** does "verbalizable" in the AI sense name anything a linguist would recognise?
 
 ### 7. Anthropology ⇄ AI — the dashed edge, and why it should not be
@@ -196,8 +205,14 @@ two distinct ways**:
   specific annotator pool under specific instructions in a specific institutional setting. That
   is not "human values"; it is *somebody's* values, sampled.
 
-**Reading:** Lambert, [*RLHF Book*](https://rlhfbook.com) — **Lecture 8, "On 'Preferences' and
-Preference Data"**, and the chapter on character training. Then RewardBench 2's decision to
+**Reading:** ★ Farrell, **Gopnik** et al., *Large AI models are cultural and social
+technologies* ([Science, 2025](https://www.science.org/doi/10.1126/science.adt9819)) — the
+argument that these systems are best understood as **cultural technologies** in the lineage of
+writing, print and libraries: techniques for transmitting information between people, not
+agents. Then Yiu, Kosoy & Gopnik, *Transmission versus truth, imitation versus innovation*,
+which sharpens it empirically — children **innovate**, models **transmit**. Then Lambert,
+[*RLHF Book*](https://rlhfbook.com) — **Lecture 8, "On 'Preferences' and Preference Data"**, and
+the chapter on character training. Then RewardBench 2's decision to
 **commission new human prompts** rather than reuse existing ones — a contamination fix that is
 also, unavoidably, a choice about whose prompts. Pair with Sapolsky on culture as transmitted
 rather than innate (session 0).
@@ -222,6 +237,24 @@ the contrast that *would* isolate it is a genuine open problem and a good sessio
 **Session task:** what would an anthropology of model post-training measure? Candidate: the same
 probe across models tuned by different annotator populations — the cross-cultural design, applied
 to models rather than to people.
+
+### 7b. Neuroscience ⇄ AI — sparse coding, the ancestor nobody cites
+Sparse autoencoders are treated in the AI literature as a 2023 invention. They are a
+**neuroscience idea, reimported after twenty-five years.**
+
+- **Source:** **Olshausen** & Field, *Emergence of simple-cell receptive field properties by
+  learning a sparse code for natural images* (1996). Impose sparsity on a code for natural
+  images and you recover oriented, localised, bandpass receptive fields — the simple cells Hubel
+  and Wiesel found in cortex. Olshausen directs Berkeley's **Redwood Center for Theoretical
+  Neuroscience**, which exists for exactly this question.
+- **Claim:** *Towards Monosemanticity* (2023) and the SAE literature — impose sparsity on a code
+  for *activations* and recover interpretable features.
+- **The loop worth noticing:** rung 1 of the technique ladder measures orientation selectivity in
+  a vision model — i.e. looks for simple cells. Rung 5 uses sparse coding to find features. The
+  method used at rung 5 was invented to explain the thing measured at rung 1. Neither rung says
+  so, which is the sort of gap this reading group exists to close.
+- **Session task:** what did sparse coding assume about the data that SAEs on activations may not
+  inherit?
 
 ### 8. Psychology ⇄ AI, done properly — run the paradigm on both
 The syllabus above is adversarial by construction: every session pairs a claim with a control

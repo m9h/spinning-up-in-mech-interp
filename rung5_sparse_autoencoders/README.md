@@ -9,6 +9,13 @@ far more **monosemantic** than neurons, and you can *steer* the model by turning
 
 ## Read
 
+- **The ancestor, and it is not an AI paper:** Olshausen & Field, *Emergence of simple-cell
+  receptive field properties by learning a sparse code for natural images* (Nature, 1996).
+  Impose a sparsity penalty on a code for natural images and you recover oriented, localised,
+  bandpass receptive fields — the simple cells Hubel and Wiesel found in visual cortex. Sparse
+  coding is a **neuroscience** idea; the SAE literature reimported it twenty-five years later,
+  and mostly does not cite it. Note the loop: **rung 1 measures those very receptive fields in a
+  vision model.** The method you use here was invented to explain the thing you measured there.
 - **Primary:** Bricken et al., *Towards Monosemanticity* (Anthropic, 2023).
 - **Then:** Templeton et al., *Scaling Monosemanticity* (2024) — millions of features, feature
   steering ("Golden Gate Claude").
