@@ -54,6 +54,25 @@ foundational text and the 2026 claim together, and asks a single question:
 
 > *Is the AI paper using the construct, or using its name?*
 
+### The failure mode this group must avoid
+
+Reproduction is necessary and it is not self-validating. **We produced a confident false
+negative by reproducing.** We reported that a published method failed a mismatch null; it was
+two bugs of ours, and the authors' repository had shipped reference numbers the whole time.
+
+A null-only reproduction cannot distinguish *"the method fails"* from *"our rebuild is broken"* —
+and the second is far likelier, because the authors got it working and you have been at it for
+an afternoon. A group that reproduces without this discipline will generate wrong negatives at
+scale, and wrong negatives about other people's work are worse than no reproduction at all.
+
+**So every reproduction here opens with a green test:** something the original authors published
+that our rebuild must match, plus deliberately broken variants that must *fail*. Only then does a
+null mean anything. See [`READING_A_PAPER.md`](../READING_A_PAPER.md), question zero.
+
+The second-order lesson from that episode is the one worth carrying: one of our two bugs came
+from a **correct, separately verified premise** reasoned to a wrong conclusion. No amount of
+further thinking would have caught it. Only the published anchor did.
+
 ## What a session ships
 
 | output | why it is the point |
