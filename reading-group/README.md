@@ -40,6 +40,37 @@ Every large interpretability claim of 2025–26 imports a construct from cogniti
 read the AI paper and take the construct on trust. This one reads the construct first, from the
 discipline that owns it, and only then asks whether the borrowing is faithful.
 
+## Continuing an existing group, not starting one
+
+The San Francisco Cognitive Science Reading Group has met since March 2023 — thirty sessions.
+**This syllabus is written to continue that corpus, not to repeat it.** Several papers below have
+already been read, and where that is true the session is a *return* with something new: a
+reproduction.
+
+**Already covered — do not re-read, revisit with an implementation:**
+
+| already read | what has since become available |
+|---|---|
+| *Emergent Introspective Awareness in LLMs* (Feb 2026) | our replication on open weights: the effect is **steering, not introspection** — the negation control the paper lacked |
+| *Identifying indicators of consciousness in AI systems* (Butlin, Long et al., Mar 2026) | the indicators are still **not operationalised**; making them executable is a live project |
+| *Zoom In! An Introduction to Circuits* (May 2026) | the quantitative atlas the paper never had — 5,808 units with two null distributions, since Microscope went offline in 2025 |
+| *Societies of Thought* (scheduled Aug 18) | an adversarial replication in which the accuracy gain **reverses** on a second benchmark, plus the authors' own retraction of the redundancy finding |
+| *Behave* (scheduled Sept) | session 0 below uses its timescale structure as the method for the rest |
+
+**The group's own strength, and an opening nobody in interpretability has taken.** Five sessions
+on predictive processing — Clark twice, the Free Energy Principle, Active Inference twice, the
+Self-Evidencing Brain — plus *The Neural Architecture of Language*, which is a predictive-coding
+paper. **Language models are literally next-token predictors, and the interpretability literature
+almost never engages the predictive-processing framework.** This group is better placed than
+almost anyone to ask what that framework says about a transformer, and whether "prediction error"
+has any mechanical referent in one. That is a genuinely open question, not a review.
+
+**Genuine gaps in the corpus** that the sessions below fill: the global workspace itself (Baars,
+Dehaene) as distinct from Seth and Damasio on consciousness; metacognition *as measured*
+(meta-d′, not as a concept); Nisbett & Wilson on confabulation, which bears directly on the
+introspection session already held; sparse coding as the ancestor of today's interpretability
+tools; and the cultural/preference-encoding angle on post-training.
+
 ## The frame
 
 The Sloan Foundation's 1978 report drew cognitive science as a hexagon of six disciplines —
@@ -149,7 +180,8 @@ constrains how much weight the analogy can bear.
   active challenge in its home discipline.
 - **Ours:** the OLMo replication — what survives when you run it on open weights.
 
-### 2. Philosophy ⇄ Psychology — introspection, and why psychology abandoned it
+### 2. Philosophy ⇄ Psychology — introspection *revisited*, with the missing control
+*(The group read the Lindsey paper in Feb 2026. This is the return trip.)*
 - **Source:** Nisbett & Wilson, *Telling More Than We Can Know* (1977) — people confidently
   report reasons for their own behaviour that demonstrably are not the causes. Plus the collapse
   of introspectionism (Wundt, Titchener) that made behaviourism attractive.
@@ -170,13 +202,17 @@ constrains how much weight the analogy can bear.
   reinvent a weaker version of it.
 
 ### 4. AI ⇄ Philosophy — societies of mind
+*(Scheduled for Aug 18. Bring the replication: the gain reverses on a second benchmark, and the
+authors have retracted the redundancy result.)*
 - **Source:** Minsky, *The Society of Mind* (1986); Fodor, *The Modularity of Mind* (1983) — what
   it takes for a "module" claim to have content.
 - **Claim:** *Reasoning Models Generate Societies of Thought* (2026).
 - **Control:** the replication in which the accuracy gain **reverses** on a second benchmark, and
   the authors' own retraction of the redundancy finding.
 
-### 5. Philosophy ⇄ everything — indicator frameworks and moral status
+### 5. Philosophy ⇄ everything — indicators, from prose to executable
+*(Butlin & Long was read in Mar 2026, and* The Edge of Sentience *in Apr. This session does not
+re-argue them — it asks what it would take to* run *one.)*
 - **Source:** Butlin, Long et al., *Consciousness in Artificial Intelligence: Insights from the
   Science of Consciousness* (2023) — the indicator-property method, which is explicitly a way of
   making progress *without* settling the metaphysics.
