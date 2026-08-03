@@ -327,6 +327,54 @@ imported constructs: Is the source theory contested in its own field? Is the ope
 the source's, or a new one wearing the same word? Would the source discipline's own control
 apply — and does the paper run it?
 
+## The strongest opening: predictive processing × transformers
+
+This group's accumulated position is unusual and worth using deliberately. Between the SF Cog Sci
+corpus — Clark twice, the Free Energy Principle, Active Inference twice, *The Self-Evidencing
+Brain*, and *The Neural Architecture of Language* — and active membership of the **Active
+Inference Institute's textbook reading group**, the framework is held here at working depth
+rather than citation depth. Almost nobody in interpretability has it.
+
+And the target is sitting there: **a language model is literally a next-token predictor trained
+to minimise prediction error.** The vocabulary transfers so readily that it is suspicious.
+
+### The trap, named first
+
+This syllabus spends eight sessions on AI papers that borrowed a cognitive-science construct and
+tested only the model, never the construct. **Applying active inference to transformers risks
+exactly that error running the other way** — a rich framework mapped onto a system by analogy,
+with every term finding a plausible referent and none of them measured. "Attention is precision
+weighting" is a sentence that costs nothing to write and means nothing until something is
+computed.
+
+So the rule for this thread is the rule for the rest: **name the measurement before the mapping.**
+
+### What is actually measurable
+
+Some of it is, which is what makes this more than an analogy:
+
+- **Prediction error, per layer.** The logit lens gives what a layer currently predicts; the
+  actual next token gives the target. Their divergence across depth is a measurable
+  error-minimisation trajectory — and whether the residual stream carries a *prediction* or an
+  *error* is a question with a definite answer, not a preference.
+- **Precision.** Confidence-weighting has candidate referents (attention entropy, output entropy,
+  our workspace uncertainty signal). Whether they behave like precision under manipulation is
+  testable.
+- **The generative/recognition split.** Does a transformer have anything answering to both, or
+  only one? A negative here would be informative.
+
+Our own metacognition result is already in this territory: a covert internal signal tracking
+whether the model's own answer is wrong, present in pretraining and made *reportable* only later
+by fine-tuning. Whether that is precision in the technical sense is a real question, and the
+measurement exists.
+
+### The venue
+
+The **Active Inference Institute Symposium is this autumn.** That is a natural home for a result
+of this shape — and the Institute's practice of livestreaming and publicly archiving everything
+matches this group's mission exactly. A session that produces a runnable measurement rather than
+a mapping would have somewhere to go.
+
 ## A standing resource: the Simons Institute
 
 Berkeley's [Simons Institute](https://simons.berkeley.edu/programs/special-year-large-language-models-transformers-part-1)
