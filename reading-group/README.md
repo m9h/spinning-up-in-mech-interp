@@ -92,6 +92,43 @@ further thinking would have caught it. Only the published anchor did.
 | Distill *Circuits* (2020) | argued in pictures; no numbers, no null, Microscope offline since 2025 | 5,808 units quantified, with two null distributions |
 | Societies of Thought (2026) | no code, no data | an adversarial replication — the accuracy gain **reverses** on a second benchmark |
 
+## Session 0 — the spine: at what timescale are you explaining this?
+
+Read before everything else, and return to it constantly.
+
+**Sapolsky, *Behave: The Biology of Humans at Our Best and Worst* (2017).** Its structure is the
+method, not the content: take one behaviour and explain it at every timescale in turn — what
+happened a second before (neurons), minutes to hours before (hormones), days to months
+(plasticity), years (development), centuries (culture), millennia (evolution). No level is *the*
+explanation; the behaviour is the intersection.
+
+Interpretability has exactly this problem and rarely names it. When a model emits a token, the
+candidate explanations sit at wildly different timescales:
+
+| timescale | the model's analogue | how we study it |
+|---|---|---|
+| ~now | the forward pass — attention, the residual stream at this token | lenses, patching, ablation |
+| this conversation | the context window, in-context learning | induction heads |
+| weeks | fine-tuning, RLHF, preference data | the post-training ladder |
+| months | pretraining | checkpoint sweeps |
+| decades | who wrote the internet, in what language | data provenance — barely studied |
+| centuries | the culture encoded in that text | session 7, and almost nobody |
+
+**Why this belongs at the front.** Most disputes in these papers are timescale confusions
+wearing other clothes. "Does the model introspect?" mixes a forward-pass question with a
+training-history one. Our own results are strewn across the table — an induction phase change at
+one timescale, a post-training viewpoint shift at another, and a covert error signal that turns
+out to be present in pretraining and made *reportable* weeks later by fine-tuning. That result
+is unreadable without the ladder of levels.
+
+**Companion:** Sapolsky, *Determined* (2023), for session 2. If human authorship of our own
+reasons is substantially constructed after the fact — which is Nisbett & Wilson's finding with
+the philosophy attached — then "the model confabulates its reasoning" stops being a
+disqualifying objection and becomes a *comparison*.
+
+*Local note: Sapolsky and McClelland are both at Stanford. This syllabus has two of its anchors
+within a few miles.*
+
 ## Sessions
 
 Eight edges, plus a synthesis. Each session is one foundational reading, one recent AI paper,
@@ -148,13 +185,43 @@ constrains how much weight the analogy can bear.
   speaking model; the formulation/articulation split) is almost never cited.
 - **Session task:** does "verbalizable" in the AI sense name anything a linguist would recognise?
 
-### 7. Anthropology ⇄ AI — the dashed edge that stayed dashed
-- Anthropology was the least-connected vertex in 1978 and is nearly absent from interpretability
-  now. Yet post-training is *enculturation*: a model acquires a register, a set of refusals, a
-  persona.
-- **Ours:** post-training moves the model's internal viewpoint ~10× more than reinforcement
-  learning does, while task capability stays flat — a change in stance, not competence.
-- **Session task:** what would an anthropology of model post-training even measure?
+### 7. Anthropology ⇄ AI — the dashed edge, and why it should not be
+Anthropology was the least-connected vertex in 1978 and is nearly absent from interpretability
+now. It should not be, because **training encodes human behavioural preferences and culture, in
+two distinct ways**:
+
+- **Pretraining** passively absorbs the distribution of written human text — filtered by who
+  writes, in which languages, and what got digitised.
+- **RLHF and preference tuning** actively impose a *curated* preference structure, produced by a
+  specific annotator pool under specific instructions in a specific institutional setting. That
+  is not "human values"; it is *somebody's* values, sampled.
+
+**Reading:** Lambert, [*RLHF Book*](https://rlhfbook.com) — **Lecture 8, "On 'Preferences' and
+Preference Data"**, and the chapter on character training. Then RewardBench 2's decision to
+**commission new human prompts** rather than reuse existing ones — a contamination fix that is
+also, unavoidably, a choice about whose prompts. Pair with Sapolsky on culture as transmitted
+rather than innate (session 0).
+
+**★ Ours, and an interpretation worth arguing about.** The stages differ sharply in how far they
+move the model's internal viewpoint, while task capability stays flat:
+
+| stage | what its reward encodes | viewpoint movement |
+|---|---|---|
+| SFT + DPO | **human preference judgements** | **~29%** beyond noise |
+| RLVR (RL-Zero) | **verifiable correctness** (maths, code) | **~3%** |
+
+The stages trained on *human preference* move the model's internal stance an order of magnitude
+more than the stage trained on *checkable correctness*. That is at least consistent with the
+reading that what post-training installs is largely **cultural rather than epistemic** — and it
+is measurable, which is unusual for a claim in this area.
+
+**Caveat, stated with it:** the arms differ in algorithm, data volume and pipeline position as
+well as in reward type, so this is a suggestive alignment, not an isolated variable. Designing
+the contrast that *would* isolate it is a genuine open problem and a good session output.
+
+**Session task:** what would an anthropology of model post-training measure? Candidate: the same
+probe across models tuned by different annotator populations — the cross-cultural design, applied
+to models rather than to people.
 
 ### 8. Psychology ⇄ AI, done properly — run the paradigm on both
 The syllabus above is adversarial by construction: every session pairs a claim with a control
