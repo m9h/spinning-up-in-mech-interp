@@ -279,3 +279,40 @@ candidate explanation for why our own error-monitoring signal works across quest
 at selecting among samples of the same question.
 
 *Both from the societies-of-thought agent's GPQA analysis.*
+
+## 24. The attention sink will calibrate your intervention for you
+
+**This one was live in this repository, in the rung that teaches controls.**
+
+GPT-2's **first position is an attention sink**: many SAE features sit there at a huge, near-constant
+activation that has nothing to do with the token. For rung 5's feature #3552 the activation at
+position 0 is **~123 on every prompt**, while its largest *content*-driven activation across 20,000
+tokens of wikitext is **16.6**, and its mean is **0.029**.
+
+Rung 5 calibrated its steering coefficient as "the 90th percentile of the feature's nonzero
+activation" — over text *including* position 0. On all four calibration prompts the feature was
+**exactly 0.0 at every content position**, so the calibration was not slightly contaminated by the
+sink; it was **entirely the sink**. We steered at `4 × 123 = 492` while printing the words *"at the
+feature's natural activation scale"*. The honest figure is `4 × 4.32 ≈ 17`. **We over-steered ~28×
+and said the opposite.**
+
+Two things it cost:
+
+- **A false qualitative claim.** At the honest scale the feature does not displace the top-5 next
+  tokens at all. The "the feature's own tokens take over" demo needed the 28× overshoot. The ladder
+  is now printed: 1× natural → 0/5 tokens change, 4× → 0/5, 32× → 5/5.
+- **An inverted statistic.** In `tools/gate_autointerp.py`, leaving position 0 in flips the headline
+  correlation from **+0.459 to −0.345** — it changes the sign of the conclusion. Pearson and
+  Spearman disagreeing in sign (−0.345 vs +0.125) was the tell; 40 of 40 extreme activations turned
+  out to be position 0.
+
+**The general shape:** a magnitude read off the model and fed back in as an intervention parameter is
+a place where an artifact becomes invisible, because the number *looks* empirical — it was measured,
+not chosen. Drop position 0. Then check that what remains is non-empty, because if the feature never
+fires on your calibration text, your "natural scale" is defined entirely by whatever artifact is left.
+
+**And the meta-lesson:** this had shipped, verified and green, through a `verify_all.sh` that only ever
+checked our own scripts against our own expectations. It was caught the first time an *independent
+line of evidence* was demanded — observational firing rather than intervention. Related: **#13** (a
+null with no positive control), **#21** (dividing is not controlling), **#23** (bimodal, not binomial
+— the same tell, a distribution with two modes masquerading as one).

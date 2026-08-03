@@ -80,6 +80,15 @@ not as something that teaches you to run your own.
 So the default path through the ecosystem is *browse features → read the AI-written label →
 steer → be impressed*. This rung is the missing step: **check**.
 
+**We failed this ourselves, and an independent check caught it.**
+[`tools/gate_autointerp.py`](../tools/gate_autointerp.py) asks whether this feature's
+decoder-derived label describes where it *naturally fires* in real text — no steering at all,
+which is the same question Delphi's `detection` scorer asks, computed exactly instead of by a
+70B judge. The label survives (specificity **+3.24** at its top firing positions vs **+0.71** at
+random and **+1.37** at another feature's top positions; correlation **+0.459** among active
+positions). Building that gate is what exposed the calibration bug above. It runs in
+`verify_all.sh`.
+
 **And there is now a tool for the label half of it.** [Delphi](https://github.com/EleutherAI/delphi)
 (EleutherAI) generates feature explanations *and scores them* — **detection** (given the
 explanation, does a model correctly predict whether a whole sentence activates the feature?) and

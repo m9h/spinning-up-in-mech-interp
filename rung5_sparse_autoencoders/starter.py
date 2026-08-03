@@ -65,16 +65,28 @@ def encode_one(resid, f):
 @torch.no_grad()
 def feature_scale(f, texts):
     """A realistic 'feature strongly on' magnitude: 90th percentile of its nonzero activation
-    over some text. Steering at this scale injects the feature at its own natural strength
-    instead of blowing past saturation."""
+    over some text.
+
+    *** POSITION 0 IS EXCLUDED, AND THAT IS THE WHOLE POINT. ***
+    GPT-2's first position is an attention sink: many SAE features sit at a huge, constant
+    activation there regardless of what the token says. For this feature it is ~123 on every
+    prompt, while its largest CONTENT-driven activation across 20k tokens of wikitext is 16.6.
+    Including position 0 does not bias the calibration slightly -- it replaces it entirely,
+    and you end up 'calibrating' on an artifact and steering ~28x too hard while believing you
+    are at the natural scale. This was a real bug in this file; see PITFALLS.md #24 and
+    ../tools/gate_autointerp.py, which is what caught it."""
     vals = []
     for t in texts:
         ids = tok(t, return_tensors="pt").input_ids.to(dev)
         hs = model(ids, output_hidden_states=True).hidden_states[LAYER][0]  # resid_pre.LAYER
-        vals.append(encode_one(hs, f))
+        vals.append(encode_one(hs, f)[1:])                       # <- drop the sink
     a = torch.cat(vals)
     nz = a[a > 0]
-    return float(nz.quantile(0.9)) if nz.numel() else 1.0
+    if nz.numel() < 5:
+        print(f"  ! feature fired at only {nz.numel()} content positions in the calibration "
+              f"text -- the scale below is not well determined.")
+        return float(nz.max()) if nz.numel() else 1.0
+    return float(nz.quantile(0.9))
 
 
 # --- steering: add a raw vector at the SAE's hook layer (resid_pre.7 == output of block 6) ---
@@ -121,11 +133,24 @@ if __name__ == "__main__":
     print(f"Picked SAE feature #{f} of {W_dec.shape[0]} (GPT-2 layer {LAYER} resid_pre).")
     print("  it promotes tokens:", [tok.decode([t]) for t in top])
 
-    calib = ["The weather in London is", "She studied biology at the university and",
-             "The government announced a new policy on", "He picked up the phone and said"]
+    # Calibration text must be long enough that a SPARSE feature actually fires on content.
+    # The four short prompts this used to use produced *exactly zero* content activations for
+    # this feature -- so the old "natural scale" was 100% attention sink.
+    calib = ["""The orchestra performed works by Brahms and Dvorak respectively, drawing
+        audiences from across the region. Critics and audiences alike praised the ensemble,
+        whose conductor had studied in Vienna. The society, whose members numbered in the
+        thousands worldwide, funded the season through subscriptions. Those wishing to attend
+        were advised to book early, as the hall seats only nine hundred.""",
+        """The government announced a new policy on coastal development, the terms thereof
+        being published the following week. Officials who had drafted the measure said it
+        would apply to landowners and tenants alike. She studied biology at the university
+        and later worked across three continents, advising ministries whose environmental
+        agencies were newly formed. The weather in London is rarely a factor in such
+        negotiations, though delegates joked otherwise."""]
     scale = feature_scale(f, calib)
     coef = 4.0 * scale                                     # inject the feature ~4x its typical strength
-    print(f"  natural activation scale ~{scale:.1f}; steering at coef {coef:.1f}")
+    print(f"  natural activation scale ~{scale:.2f} (content positions only, sink excluded); "
+          f"steering at coef {coef:.1f}")
 
     feat_vec = coef * feat                                 # steer WITH the feature
     neg_vec = -coef * feat                                 # its negation
@@ -147,10 +172,20 @@ if __name__ == "__main__":
     print(f"  + RANDOM dir (same norm) : {rnd:6.2f}   (delta {rnd - clean:+.2f})   <- control")
     print(f"  - feature   (negation)   : {neg:6.2f}   (delta {neg - clean:+.2f})   <- control")
 
-    gen_vec = scale * feat                                 # 1x natural strength, for a legible effect
+    # Qualitative view. Read the honest lesson here, not a slogan: the measured, controlled
+    # effect above is real at the natural scale, but DISPLACING the top-5 needs far more force
+    # than the feature ever applies on its own. The dramatic version of this demo used a
+    # coefficient calibrated on the attention sink -- roughly 28x too large (PITFALLS.md #24).
     print(f"\nTop-5 next tokens after '{prompt}':")
-    print("  clean  :", top_next(prompt, None))
-    print("  steered:", top_next(prompt, gen_vec), " <- the feature's own tokens take over")
+    base = top_next(prompt, None)
+    print("  clean            :", base)
+    for mult, lbl in ((1.0, "1x natural"), (4.0, "4x natural"), (32.0, "32x  (over-steered)")):
+        out = top_next(prompt, mult * scale * feat)
+        moved = sum(t not in base for t in out)
+        print(f"  steered {lbl:19s}:", out, f" [{moved}/5 tokens changed]")
+    print("\n  Note the ladder: the feature's own tokens only take over once you push well past\n"
+          "  any magnitude the feature reaches naturally. A steering demo that looks spectacular\n"
+          "  is often reporting the size of your intervention, not the meaning of the feature.")
 
     print("\nCONTROL: steering WITH the feature must raise its own tokens' specificity far more")
     print("than a random direction of the same norm (which shifts all logits together and nets")

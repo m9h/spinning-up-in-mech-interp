@@ -79,8 +79,15 @@ issue count) in August 2026. Signals as measured:
 | [`greentfrapp/lucent`](https://github.com/greentfrapp/lucent) | **2025-03-21** | 664 |
 | [`AlignmentResearch/tuned-lens`](https://github.com/AlignmentResearch/tuned-lens) | **2025-08-07** | 607 |
 
-⚠️ **This is maintenance evidence, not fitness evidence.** None of these tools has been *run* as
-part of this curriculum. The rungs are verified because `verify_all.sh` executes them and checks
+✅ **One gate now exists.** [`tools/gate_autointerp.py`](tools/gate_autointerp.py) runs in
+`verify_all.sh` and holds the *idea* behind Delphi's `detection` scorer to account — does a
+feature's label predict where it actually fires? — computed exactly, on CPU, in 9 seconds, rather
+than via the 70B vLLM explainer Delphi defaults to. **Building it immediately found a live bug in
+rung 5** (PITFALLS #24): the steering coefficient had been calibrated on GPT-2's attention sink
+and was ~28× too large. That is what a gate is for.
+
+⚠️ **For everything else this is maintenance evidence, not fitness evidence.** No other tool here
+has been *run* as part of this curriculum. The rungs are verified because `verify_all.sh` executes them and checks
 the control; the external tools here have no such gate. Hold them to the standard this curriculum
 holds papers to — **run it and see whether the control passes** — before trusting a result you get
 out of one. Reporting back that one of them fails to reproduce is a contribution.

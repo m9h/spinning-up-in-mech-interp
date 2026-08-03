@@ -6,6 +6,9 @@ huggingface_hub           # rung 5 (downloads the GPT-2 SAE tensors)
 safetensors               # rung 5
 torchvision               # rung 1 (InceptionV1 = googlenet)
 
+# Tool gates (./verify_all.sh) need real text to test against:
+# datasets                # tools/gate_autointerp.py -- reports SKIP without it
+
 # Optional but recommended: free, local-first experiment tracking (drop-in for wandb).
 # Every rung produces numbers worth comparing across runs -- see GETTING_STARTED.md.
 # trackio

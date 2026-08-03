@@ -15,6 +15,20 @@ for r in rung1_features_and_circuits rung2_residual_stream rung3_superposition \
     FAIL=1
   fi
 done
+# --- tool gates: our recommendations held to the standard we hold papers to ---
+# These test an EXTERNAL line of evidence against a signal a rung already measured, rather than
+# re-running our own script and agreeing with ourselves. Skipped if optional deps are absent.
+for g in tools/gate_autointerp.py; do
+  n=$(basename "$g" .py)
+  START=$(date +%s)
+  $PY "$g" >/tmp/spinup_$n.out 2>/tmp/spinup_$n.err; rc=$?
+  case $rc in
+    0) printf "  PASS  %-32s %3ds  (gate)\n" "$n" "$(( $(date +%s) - START ))" ;;
+    2) printf "  SKIP  %-32s optional dep missing (pip install datasets)\n" "$n" ;;
+    *) printf "  FAIL  %-32s %s\n" "$n" "$(grep -m1 . /tmp/spinup_$n.out | tail -1)"; FAIL=1 ;;
+  esac
+done
+
 [ $FAIL -eq 0 ] && echo "All rungs ran. Output kept in /tmp/spinup_*.out" \
                || echo "Some rungs failed -- see PITFALLS.md"
 exit $FAIL

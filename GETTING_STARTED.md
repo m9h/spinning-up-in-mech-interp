@@ -34,6 +34,11 @@ Or check the whole curriculum at once:
 ./verify_all.sh
 ```
 
+That runs every rung **and the tool gates** — checks that hold an external line of evidence
+against a number a rung already measured, instead of re-running our own code and agreeing with
+ourselves. The first gate we built found a real bug in rung 5 ([PITFALLS #24](PITFALLS.md)).
+Gates need `pip install datasets`; without it they report SKIP rather than failing.
+
 ## What to expect
 
 Verified end-to-end from a clean virtualenv on CPU. Times exclude the one-off model download.
@@ -44,7 +49,7 @@ Verified end-to-end from a clean virtualenv on CPU. Times exclude the one-off mo
 | **2** residual stream | ~5 s | ~500 MB | OV copying top **L11H3 +5.84** (median head +0.96); QK previous-token top **L4H11 = 1.00** |
 | **3** superposition | ~13 s | none | more features represented than dimensions as sparsity rises; at sparsity 0.99 recovery collapses to the null |
 | **4** induction heads | ~18 s | (GPT-2, cached) | **L5H5 0.926**, L5H1, L6H9 — GPT-2's documented induction heads |
-| **5** sparse autoencoders | ~7 s | ~150 MB | feature **#3552** → ` alike, respectively, who…`; top-5 next tokens flip from weekdays to the feature's tokens |
+| **5** sparse autoencoders | ~5 s | ~150 MB | feature **#3552** → ` alike, respectively, who…`; a steering **ladder** — 1× and 4× natural change 0/5 top tokens, 32× changes 5/5 |
 | **7** attribution graphs | ~10 s | (GPT-2, cached) | clean +2.53 / corrupted −2.98; the computation moving from the subject token (early layers) to the final token (late layers) |
 
 Rungs 2, 4, 5 and 7 all use GPT-2 small, so the ~500 MB download happens once.
@@ -57,7 +62,8 @@ Rungs 2, 4, 5 and 7 all use GPT-2 small, so the ~500 MB download happens once.
 | 2 | copying z **+5.84** | random matrix ≈ **0**; QK uniform-attention baseline **0.16** |
 | 3 | recovery beats null at moderate sparsity | random dictionary; at sparsity 0.99 they **converge** — the control catches the failure |
 | 4 | ablate induction heads **+6.35** | ablate 5 random heads **+0.23** |
-| 5 | steer with feature **+6.53** | random direction ≈ **0**; negation **−13.45** |
+| 5 | steer with feature **+6.13** | random direction ≈ **0**; negation **−3.12** |
+| gate | feature's label predicts natural firing, **+3.24** | random positions **+0.71**; another feature's top positions **+1.37** |
 | 7 | top cells restore **~100%** | median (layer, position) cell restores **~0%** |
 
 ### Why your numbers may differ slightly
