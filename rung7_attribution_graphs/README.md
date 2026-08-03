@@ -31,7 +31,7 @@ gave a drink to ___" → " Mary"):
    the computation cross layers.
 
 **Scale-up (two, and they disagree — see the control below):**
-**[`circuit-tracer`](https://github.com/safety-research/circuit-tracer)**
+**[`circuit-tracer`](https://github.com/decoderesearch/circuit-tracer)**
 (released) builds transcoder-based attribution graphs on Gemma-2-2B / Llama, resolving the path
 down to individual *features* rather than residual positions — the same causal logic, at feature
 resolution.

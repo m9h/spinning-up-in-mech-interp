@@ -36,7 +36,7 @@ SAE training required. It downloads one layer's SAE tensors directly (~150 MB) a
    tokens.
 
 **Scale-up (canonical target):** Google's **Gemma Scope** SAEs for Gemma-2, via
-[SAELens](https://github.com/jbloomAus/SAELens) / Neuronpedia — the same code, a bigger model
+[SAELens](https://github.com/decoderesearch/SAELens) / Neuronpedia — the same code, a bigger model
 and millions of features. (Gemma-2 is gated, so it needs a HF token; GPT-2 keeps the starter
 frictionless.)
 

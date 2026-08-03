@@ -14,7 +14,7 @@ torchvision               # rung 1 (InceptionV1 = googlenet)
 # transformer_lens        # rungs 2, 4 — cleaner per-head work; ARENA uses it
 # sae_lens                # rung 5 — pretrained SAEs incl. Gemma Scope (one-line release swap)
 # lucent                  # rung 1 — optimization-based feature visualization (OpenAI Microscope)
-# circuit-tracer          # rung 7 — github.com/safety-research/circuit-tracer
+# circuit-tracer          # rung 7 — github.com/decoderesearch/circuit-tracer
 
 # --- Rungs 6, 8 — lenses + the recent-claim capstones (our companion code) ---
 # git+https://github.com/anthropics/jacobian-lens.git

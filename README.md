@@ -182,9 +182,9 @@ What each runnable starter finds, and the null that guards it:
 - **Foundational threads:** [Distill Circuits](https://distill.pub/2020/circuits/) ·
   [Transformer Circuits Thread](https://transformer-circuits.pub/)
 - **Tooling:** [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) ·
-  [SAELens](https://github.com/jbloomAus/SAELens) ·
+  [SAELens](https://github.com/decoderesearch/SAELens) ·
   [Gemma Scope](https://huggingface.co/google/gemma-scope) ·
-  [circuit-tracer](https://github.com/safety-research/circuit-tracer) ·
+  [circuit-tracer](https://github.com/decoderesearch/circuit-tracer) ·
   [Neuronpedia](https://neuronpedia.org)
 - **Our companion work:** [jacobian-lens](https://github.com/m9h/jacobian-lens) ·
   [jlens-lab](https://github.com/m9h/jlens-lab) · the Consciousness-Indicator Scorecard

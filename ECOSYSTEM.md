@@ -12,7 +12,7 @@ Checked by fetching each URL. If you find one broken, open an issue — that is 
 
 | what | status | use instead |
 |---|---|---|
-| **OpenAI Microscope** (`microscope.openai.com`) | **503 since early 2025.** Took the visual layer of *Zoom In!* with it | **[Transluce Monitor](https://monitor.transluce.org)** for language models; `lucent` + [rung 1](rung1_features_and_circuits/) for vision |
+| **OpenAI Microscope** (`microscope.openai.com`) | **503 since early 2025.** Took the visual layer of *Zoom In!* with it | **partially replaced — see §2.1.** Monitor covers the language case; **nothing covers vision** |
 | **`circuits.pub`** | does not resolve | [`transformer-circuits.pub`](https://transformer-circuits.pub/) (**live**, Anthropic's venue) and [Distill *Circuits*](https://distill.pub/2020/circuits/) (**live**, but Distill itself is on indefinite hiatus since 2021 — an archive, not a venue) |
 | **ARENA deep links** (`learn.arena.education/.../13_sae_intro/`) | **404** — ARENA restructured; SAE material is now §1.3.1/1.3.2 | link the chapter, not the section: [arena.education/chapter1](https://www.arena.education/chapter1) |
 | **Distill** as a place to publish | on hiatus | there is no successor venue. Circuits work now appears on arXiv, `transformer-circuits.pub`, lab blogs, and **BlackboxNLP** (the ACL workshop that ran the MIB shared task) |
@@ -23,7 +23,23 @@ numbers rather than linking the visuals, and why our artifacts are on the Hub.
 
 ---
 
-## 2. Browse-and-steer tools (the Microscope successors)
+## 2. Browse-and-steer tools
+
+### 2.1 What "successor" can and cannot mean here
+
+Microscope did **three separable things**. Grading a replacement means grading each:
+
+| function | replaced? |
+|---|---|
+| browse precomputed feature visualizations for **vision** nets (InceptionV1, AlexNet, ResNet…) | **No. Nothing does this.** Monitor is text descriptions of a language model — different modality, different models, different method. `lucent` is the only route left and it was **last pushed 2025-03-21** |
+| a **canonical shared reference**, so a paper can cite "unit 4b:373" and you can go look | language models only |
+| an **on-ramp** — click around, build intuition | yes, and improved: search, activation linting, steering |
+
+**So the vision gap is open, not filled.** That is an argument for
+[rung 1](rung1_features_and_circuits/) mattering more, not less: it recomputes the numbers from
+`torchvision` weights that are not going anywhere, rather than depending on a hosted service.
+
+### 2.2 The tools
 
 | tool | scope | what it gives you |
 |---|---|---|
@@ -45,6 +61,34 @@ Both are cheap and scalable. If you are going to trust a feature label, this is 
 See also *Evaluating SAE interpretability without explanations* ([2507.08473](https://arxiv.org/abs/2507.08473)).
 
 ---
+
+### 2.3 How these recommendations were checked — and how they were not
+
+Every tool below was checked for **liveness and maintenance** (URL fetch, last push, archive flag,
+issue count) in August 2026. Signals as measured:
+
+| repo | last push | stars |
+|---|---|---|
+| [`EleutherAI/delphi`](https://github.com/EleutherAI/delphi) | 2026-07-27 | 270 |
+| [`timaeus-research/devinterp`](https://github.com/timaeus-research/devinterp) | 2026-04-23 | 147 |
+| [`TransluceAI/circuits`](https://github.com/TransluceAI/circuits) | 2026-04-10 | 36 |
+| [`TransluceAI/observatory`](https://github.com/TransluceAI/observatory) | 2026-03-16 | 251 |
+| [`decoderesearch/SAELens`](https://github.com/decoderesearch/SAELens) | 2026-07-28 | 1492 |
+| [`decoderesearch/circuit-tracer`](https://github.com/decoderesearch/circuit-tracer) | 2026-07-18 | 2882 |
+| [`aaronmueller/MIB`](https://github.com/aaronmueller/MIB) | 2025-08-15 | 26 |
+| [`greentfrapp/lucent`](https://github.com/greentfrapp/lucent) | **2025-03-21** | 664 |
+| [`AlignmentResearch/tuned-lens`](https://github.com/AlignmentResearch/tuned-lens) | **2025-08-07** | 607 |
+
+⚠️ **This is maintenance evidence, not fitness evidence.** None of these tools has been *run* as
+part of this curriculum. The rungs are verified because `verify_all.sh` executes them and checks
+the control; the external tools here have no such gate. Hold them to the standard this curriculum
+holds papers to — **run it and see whether the control passes** — before trusting a result you get
+out of one. Reporting back that one of them fails to reproduce is a contribution.
+
+**Watch for relocations, too.** SAELens moved from `jbloomAus/` and circuit-tracer from
+`safety-research/`, both to `decoderesearch/`; old links redirect but are stale. `tuned-lens` is
+still listed by EleutherAI, while the maintained copy lives under `AlignmentResearch` and has not
+been touched in a year.
 
 ## 3. ★ Benchmarks — adjudication you can enter rather than run yourself
 
