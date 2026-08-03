@@ -1,11 +1,39 @@
 # The Cognitive Hexagon Reading Group
 
-**We make sure exciting papers have public open-source implementations and training
-documentation. Read the source before the borrowing; ship an artifact after it.**
+**Without a reproduction you cannot have the discussion. You can only discuss the paper.**
 
-A session is not finished when the discussion ends. It is finished when the paper has, in
-public: a **runnable implementation** on open weights, **training documentation** someone else
-can follow, and — the part usually missing — **the control that could falsify it.**
+That is the whole rationale. A paper is a *report about* a system. Until someone rebuilds it on
+weights you can open, the system itself is not in the room — and you cannot ask it anything.
+You can only ask what the authors chose to tell you, and evaluate the argument on style.
+
+The clearest illustration is the one this project began with. When Anthropic reported that its
+model contains a global workspace, it invited commentary from Dehaene and Naccache — the
+neuroscientists whose theory it borrows. They could not test it. They proposed six experiments
+and observed that Anthropic could run them. **None were run, because the model is closed.** The
+most qualified readers in the world were reduced to writing a response. That is what discussion
+without reproduction looks like, even at the very top.
+
+So: **we make sure exciting papers have public open-source implementations and training
+documentation.** A session is finished when the paper has, in public, a **runnable
+implementation** on open weights, **training documentation** someone else can follow, and — the
+part usually missing — **the control that could falsify it.**
+
+### What reproduction buys that reading does not
+
+**You get to ask questions the paper did not.** This is the real return, and it is larger than
+verification. Almost everything worth having in this project came from a question no paper
+asked, which only became askable once something ran:
+
+- *Do two different instruments agree about the same activation?* Neither paper could ask it;
+  each has one instrument. They agree 42× above a mismatch null.
+- *Does the covert error signal actually help pick better answers?* No. +0.008 over baseline —
+  a bound on our own claim that reading could never have produced.
+- *Does the reported effect survive a per-layer noise floor?* Half of one number was noise; the
+  headline ratio doubled.
+- *Does it hold across seeds?* The induction phase change lands in the same interval for ten
+  seeds — but a **different head** does the work in every one.
+
+None of those are in any paper. All of them are one afternoon away once the thing runs.
 
 Every large interpretability claim of 2025–26 imports a construct from cognitive science — a
 *global workspace*, *introspection*, *metacognition*, a *society of mind*. Most reading groups
