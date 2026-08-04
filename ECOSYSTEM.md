@@ -97,11 +97,35 @@ out of one. Reporting back that one of them fails to reproduce is a contribution
 still listed by EleutherAI, while the maintained copy lives under `AlignmentResearch` and has not
 been touched in a year.
 
-## 3. ★ Benchmarks — adjudication you can enter rather than run yourself
+## 3. ★ Adjudication — the field has asked for this in writing
 
-This is the biggest thing that changed since the rungs were written. Interpretability now has
-**standing benchmarks with held-out private test sets**, which is a different and stronger
-epistemic object than a control you run on your own claim.
+### The call
+***Make Mechanistic Interpretability Auditable: A Call to Develop Guidelines via Continuous
+Collaborative Reviewing*** ([arXiv 2606.00033](https://arxiv.org/abs/2606.00033), Lan, Oozeer,
+Bandi, Quirke, Meek, Barez & Abdullah — **ACL 2026**) argues that MI has **no standardised system
+for auditing experiments**, so its findings go unused in safety-critical settings where nobody can
+verify them. Its motivating example is worth sitting with: two papers reached conflicting
+conclusions about the same behaviour, and a third found **both were partially correct but
+incomparable, because their methods were inconsistent.**
+
+It proposes three things:
+
+1. a **continuous collaborative reviewing platform** for the meta-science that does not fit in
+   papers — critiques, **negative findings**, reproductions, partial results;
+2. **expert-verified guidelines** generalised from what accumulates there;
+3. **source-based auditing** — dependency chains showing which claims hold up which other claims.
+
+It is a **position paper**: none of it is built, and the authors explicitly invite debate on
+implementation. Several are at **[Martian](https://withmartian.com/prize)**, which runs a **$1M
+interpretability prize** awarding completed work.
+
+**If you want to know why this curriculum ships a null with every technique, that paper is the
+field's own answer, and it is asking for help.**
+
+### Benchmarks — adjudication you can enter rather than run yourself
+
+Interpretability now has **standing benchmarks with held-out private test sets**, which is a
+different and stronger epistemic object than a control you run on your own claim.
 
 ### MIB — Mechanistic Interpretability Benchmark
 [arXiv 2504.13151](https://arxiv.org/abs/2504.13151) (ICML 2025) · [github.com/aaronmueller/MIB](https://github.com/aaronmueller/MIB)
@@ -163,6 +187,36 @@ uncertainty — not a picture and a name. This is the closest thing the field ha
 why [READING_A_PAPER.md](READING_A_PAPER.md) exists. A reply,
 [*Resurrecting the Salmon*](https://arxiv.org/abs/2508.09363), argues the case is overstated for
 domain-specific SAEs; the dispute is live and is itself a good adjudication target.
+
+### ★ Agents — the gap in this curriculum, and in the field
+
+**Every method named in this file assumes a single forward pass.** Attribution graphs, SAEs,
+lenses, probes, activation oracles, circuit tracing — all of it takes one prompt and looks inside
+one pass. So do all eight rungs here.
+
+Deployment moved. Coding agents run for hours across hundreds of tool calls, and the toolkit did
+not follow. The honest question, which nobody has a good answer to:
+
+> **What does a control even look like for a claim about an agent's reasoning over a hundred
+> steps?**
+
+A steering result you can check with a random direction of matched norm has no obvious analogue
+when the "behaviour" is a trajectory. Neither does a mismatch null, or a median-cell baseline.
+
+Where to start if you want to work on it:
+
+- **[ARES](https://github.com/withmartian/ares)** (Martian, open source, active) — RL-first
+  infrastructure for training coding agents, built partly to support interpretability of
+  *sequential decision-making*. Its central design choice — *"the LLM itself is the agent, not
+  the scaffolding"* — is worth arguing with: it draws the model/harness boundary in a specific
+  place, and where you draw it determines what your interpretability claim is even about.
+- **[Terminal-Bench / Harbor](https://github.com/harbor-framework/terminal-bench)** — the task
+  format ARES consumes, and the place to contribute an environment.
+- **SWE-Bench Verified**, evaluable in ~20 minutes with remote sandboxing, which makes the
+  iteration loop cheap enough to actually study.
+
+This is the largest uncovered surface in the field and the most honest thing this curriculum can
+say about it is that it does not cover it either.
 
 ### Model organisms — and their lottery
 *The Model Organism Lottery* ([2607.01033](https://arxiv.org/abs/2607.01033)) finds that
