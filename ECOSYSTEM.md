@@ -251,6 +251,39 @@ interpretability claim built on an agent's stated reasoning — and it is a solv
 discipline. Same lesson as the dead salmon, different method: **the field this one is borrowing
 constructs from already paid for the controls.**
 
+**★ A worked case the interpretability field has not noticed.** Meta's CICERO reached human-level
+play at *Diplomacy* — a game whose entire premise is negotiation
+([Science, 2022](https://www.science.org/doi/10.1126/science.ade9097)). Then
+[*More Victories, Less Cooperation*](https://arxiv.org/abs/2406.04643) (Wongkamjan et al., ACL
+2024; USC ISI + UMD) assessed it properly: 24 games, 200 hours, **27,000+ messages**, using
+**Abstract Meaning Representation** to check whether what a player *said* they would do matched
+what they actually did. The result:
+
+> **"Changing inputs related to communication did not significantly impact its high score,
+> suggesting that negotiation skills play little part in the model's Diplomacy talent."**
+
+That is not a mismatch correlation. It is an **ablation**: remove the talk and the outcome barely
+moves. The communication was largely *epiphenomenal* to whatever produced the behaviour — a
+controlled demonstration of Nisbett & Wilson, in a multi-agent, long-horizon setting, with an
+independent behavioural ground truth (the moves) that single-prompt CoT studies simply do not have.
+
+| | typical CoT-faithfulness study | this |
+|---|---|---|
+| intervention | perturb the trace, watch the answer | **ablate the whole communication channel** |
+| ground truth | none — faithfulness must be *defined* | **the moves** |
+| horizon | one prompt | 24 games |
+
+A useful distinction from
+[*Do VLA Models Mean What They Say?*](https://arxiv.org/html/2607.04681v1) (2026): **functional**
+reasoning improves task performance; **faithful** reasoning reflects the process. CICERO's messages
+look like *neither* — the rarely-demonstrated cell.
+
+⚠️ **As far as we can tell nobody has connected this to the faithfulness literature.** Of the 13
+papers citing it (Semantic Scholar, Aug 2026), **zero** mention faithfulness, chain-of-thought,
+verbal reports, introspection or interpretability — they are all game-playing, negotiation and
+deception-detection work. Treat that as "we could not find it," not as proof of novelty: someone
+could make the argument without citing this paper. **Checking properly is a good first project.**
+
 Where to start if you want to work on it:
 
 - **[ARES](https://github.com/withmartian/ares)** (Martian, open source, active) — RL-first
