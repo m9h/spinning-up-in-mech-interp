@@ -240,6 +240,45 @@ Where to start if you want to work on it:
 This is the largest uncovered surface in the field and the most honest thing this curriculum can
 say about it is that it does not cover it either.
 
+### ★ Program synthesis — the other half of the salmon
+
+The dead salmon gives you a **null**: a randomized network, where a good method must find nothing.
+It does not give you the other side. **[Tracr](https://arxiv.org/abs/2301.05062)** (DeepMind, 2023)
+does: it *compiles* a human-written **RASP** program into transformer weights, so the mapping from
+weights to function is known by construction.
+**[TracrBench](https://arxiv.org/abs/2409.13714)** is a dataset of them.
+
+| substrate | what a sound method must do |
+|---|---|
+| randomized network | find **nothing** |
+| **Tracr-compiled model** | find **exactly the compiled program** |
+
+Together those bracket a method. This is [question zero](READING_A_PAPER.md) — *do you have a
+positive control?* — and the field has had the answer since 2023 and uses it thinly. (Timaeus lists
+*LLCs of Compiled Neural Networks (TRACR)* as an **unclaimed** project.)
+
+**And program synthesis is where capability actually moved.** On ARC the winning family is not
+"models that output answers" but **models that output programs, filtered by execution**:
+
+- Greenblatt sampled ~8,000 programs at t=1.0 and selected by whether they **reproduce the training
+  pairs** → 50% on the public eval (ARC Prize verified 42–43%).
+- BARC runs the *same model* two ways — programs at **t=0.8** with execution filtering, grids at
+  **t=0** with beam search — and ensembling adds **+13.75**, because the two families solve
+  *different* tasks.
+- SOAR weights execution accuracy over grid vote-count by a factor of **1000**.
+- ARC-AGI-3's first milestone went to a **small open LLM writing Python in a live REPL**.
+
+The common element is not "programs." It is **verifiable selection** — keeping what *executes
+correctly* rather than what is popular. Contrast [rung 5](rung5_sparse_autoencoders/), where the
+only thing standing between a feature label and a story is a null you remembered to run.
+
+**Why this matters for interpretability specifically.** A program is an interpretable artifact by
+construction: read it, run it, test it — no reverse-engineering required. And execution filtering
+comes with something no interpretability method currently has — **a measured false-discovery
+rate**. Greenblatt found ~**9%** of programs that pass the training pairs are nonetheless wrong,
+and voting removes about half of those. Ask what the equivalent number is for an attribution graph
+or an SAE feature label. Nobody can tell you.
+
 ### Model organisms — and their lottery
 *The Model Organism Lottery* ([2607.01033](https://arxiv.org/abs/2607.01033)) finds that
 conclusions drawn from model organisms **depend strongly on the training methodology used to
