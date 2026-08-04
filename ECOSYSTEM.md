@@ -225,6 +225,32 @@ The honest question, which nobody has a good answer to:
 A steering result you can check with a random direction of matched norm has no obvious analogue
 when the "behaviour" is a trajectory. Neither does a mismatch null, or a median-cell baseline.
 
+**The gap is not unoccupied — it is occupied by psychologists.** *AI Agent Behavioral Science*
+([Nature HSSC, 2026](https://www.nature.com/articles/s41599-026-07316-7)) proposes systematic
+behavioural observation, interventions to test hypotheses, and theory-guided interpretation of how
+agents act and adapt **over time**. *Machine Psychology* describes itself as "moving beyond
+architectural interpretability by treating models as experimental subjects." They have the
+longitudinal methodology this curriculum's techniques lack. They also inherit a set of hard-won
+cautions the AI literature is mostly skipping.
+
+**★ The one that matters most.** The classical method for studying long-horizon reasoning is
+**Ericsson & Simon's protocol analysis** — *Verbal Reports as Data*. Agent tooling is reinventing
+it now: [AgentTrace](https://arxiv.org/html/2602.10133v1) is "the first open standard for
+structured agent logging," spanning cognitive, operational and contextual traces. What is not being
+reimported is the thirty years of work on **when a verbal report is admissible evidence at all**:
+
+> **Chain-of-thought is a concurrent verbal protocol, and "unfaithful chain-of-thought" is
+> [Nisbett & Wilson (1977)](https://doi.org/10.1037/0033-295X.84.3.231) rediscovered** — *Telling
+> More Than We Can Know*, in which people confidently report reasons that had no causal role in
+> their behaviour.
+
+Protocol analysis distinguishes **concurrent from retrospective** report, quantifies **reactivity**
+(verbalizing changes the process being reported), and specifies the conditions under which a report
+*tracks* a process rather than *narrating* one. That is the missing validity theory for every
+interpretability claim built on an agent's stated reasoning — and it is a solved problem in another
+discipline. Same lesson as the dead salmon, different method: **the field this one is borrowing
+constructs from already paid for the controls.**
+
 Where to start if you want to work on it:
 
 - **[ARES](https://github.com/withmartian/ares)** (Martian, open source, active) — RL-first
