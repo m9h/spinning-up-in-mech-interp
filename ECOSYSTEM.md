@@ -150,6 +150,20 @@ This is the same disease as an unfaithful attribution graph ([rung 7](rung7_attr
 in a new organ: a readout that is *accurate when it speaks* and *systematically quiet* elsewhere
 looks excellent under every metric that only scores what it said.
 
+### ★ The dead salmon, and interpretability-as-statistical-inference
+[*The Dead Salmons of AI Interpretability*](https://arxiv.org/abs/2512.18792) (Méloux et al., 2025)
+imports the field's most famous cautionary tale — a **dead fish** showing significant fMRI
+activation to social stimuli under standard analysis — and shows the AI analogue is everywhere:
+feature attribution, probing, sparse autoencoding **and causal analyses** all yield plausible
+explanations of **randomly initialized networks**.
+
+The reframing is the useful part: an explanation is a **parameter of a statistical model inferred
+from computational traces**, so it needs alternative hypotheses, identifiability, and quantified
+uncertainty — not a picture and a name. This is the closest thing the field has to a statement of
+why [READING_A_PAPER.md](READING_A_PAPER.md) exists. A reply,
+[*Resurrecting the Salmon*](https://arxiv.org/abs/2508.09363), argues the case is overstated for
+domain-specific SAEs; the dispute is live and is itself a good adjudication target.
+
 ### Model organisms — and their lottery
 *The Model Organism Lottery* ([2607.01033](https://arxiv.org/abs/2607.01033)) finds that
 conclusions drawn from model organisms **depend strongly on the training methodology used to
@@ -185,6 +199,9 @@ collaborative research behind it — exists here, in pieces:
 | **[Neuronpedia](https://neuronpedia.org)** | open platform | hosts external lenses and SAEs; has an open-problems list |
 | **[Open-R1](https://huggingface.co/blog/open-r1)** (HF) | staged open reproduction of a reasoning model | the reproduction model, at scale |
 | **MIB / BlackboxNLP** | benchmark + ACL workshop | submit to a leaderboard |
+| **[Martian](https://withmartian.com/prize)** | company (LLM routing) with a serious interp arm; co-authors of the ACL 2026 auditability call | runs a **$1M interpretability prize** — grants for directions *and* awards for completed work, currently between rounds — and hackathons with **Apart Research** |
+| **[NDIF / `nnsight`](https://github.com/ndif-team)** | **$9M NSF** national infrastructure (Bau Lab); remote execution on open-weight model internals | 110+ papers; free academic access |
+| **[Decode Research](https://www.decoderesearch.org/)** | the nonprofit that now maintains **Neuronpedia + SAELens + circuit-tracer + SAEDashboard** | "always looking for new partners" |
 
 **Unclaimed Timaeus projects that overlap this curriculum directly** (difficulty as they list it):
 

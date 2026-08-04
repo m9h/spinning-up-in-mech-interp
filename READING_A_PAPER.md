@@ -7,6 +7,28 @@ from a decoration.
 
 Use it on the papers behind each rung. Then use it on ours.
 
+**The paper that makes the case better than this file does:**
+[*The Dead Salmons of AI Interpretability*](https://arxiv.org/abs/2512.18792) (Méloux, Dirupo,
+Portet & Peyrard, 2025). In 2009 a dead Atlantic salmon was placed in an fMRI scanner and shown
+photographs of humans in social situations; standard analysis found significant activation in its
+brain. The fish was dead. The paper won an Ig Nobel and permanently changed how neuroimaging
+handles multiple comparisons.
+
+Its AI sequel argues that **feature attribution, probing, sparse autoencoding, and even causal
+analyses all produce plausible-looking explanations for randomly initialized networks** — models
+that cannot contain the structure being reported, for the same reason the salmon could not be
+socially reasoning. The prescription is the one this curriculum is built on: treat an
+interpretability method as a **statistical estimator**, test findings against explicit alternative
+computational hypotheses, prioritise identifiability, and quantify uncertainty.
+
+Every rung here ships a null because of this. Rung 1 has a random-init net and a weight-shuffled
+net; rung 3 a random dictionary; rung 5 a random direction and a negation; rung 7 the median
+(layer, position) cell. If your method reports something interesting about a dead network, that
+number is a fact about your method.
+
+(See also the reply, [*Resurrecting the Salmon*](https://arxiv.org/abs/2508.09363) — the argument
+is live, not settled.)
+
 ---
 
 ## Question zero: do you have a *positive* control?
