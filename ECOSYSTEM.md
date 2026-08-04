@@ -195,7 +195,29 @@ lenses, probes, activation oracles, circuit tracing — all of it takes one prom
 one pass. So do all eight rungs here.
 
 Deployment moved. Coding agents run for hours across hundreds of tool calls, and the toolkit did
-not follow. The honest question, which nobody has a good answer to:
+not follow.
+
+**And this is measured, not predicted.** ARC-AGI has already run the experiment three times:
+
+| | what moved | what it measures |
+|---|---|---|
+| **ARC-AGI-1** | saturated at **98%** for $0.52/task, against a **$17** human baseline | harness on a *frozen* 8B model: **+53.3 pts** ([2505.07859](https://arxiv.org/abs/2505.07859)). Base-model swap 3B→8B: **+3.4** |
+| **ARC-AGI-2** | API **92.5%** vs compute-capped Kaggle **~24%** | **68 points on identical tasks**, from budget and scaffold alone |
+| **ARC-AGI-3** | **<1% (Mar 2026) → ~30% (Jul)** | the benchmark went **interactive and agentic** |
+
+The tell is in the name: ARC-AGI-3's first milestone was won by Tufa Labs' **"Duck Harness"** — a
+small open LLM writing Python in a live REPL. The winning entry is a harness, and is called one.
+ARC Prize's own 2024 report: *"there does not exist any static inference-style transduction
+solution that scores above 10%."*
+
+⚠️ **Do not over-read this.** It is a claim about *where score movement comes from*, strongest for
+small models under a compute cap. The 2026 frontier also delivered very large genuine model-axis
+gains. But it does license one uncomfortable observation:
+
+> **Every technique in this curriculum studies the model. On the benchmark where this has been
+> measured most carefully, the model is the minority term.**
+
+The honest question, which nobody has a good answer to:
 
 > **What does a control even look like for a claim about an agent's reasoning over a hundred
 > steps?**
