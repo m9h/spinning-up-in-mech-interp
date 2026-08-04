@@ -289,8 +289,32 @@ Where to start if you want to work on it:
   *sequential decision-making*. Its central design choice — *"the LLM itself is the agent, not
   the scaffolding"* — is worth arguing with: it draws the model/harness boundary in a specific
   place, and where you draw it determines what your interpretability claim is even about.
+- **[COS-PLAY](https://github.com/wuxiyang1996/COS-PLAY)** ([arXiv 2604.20987](https://arxiv.org/abs/2604.20987),
+  **MIT**) — six game environments, an LLM decision agent plus a skill-bank agent that turns
+  rollouts into reusable "skills." **The clearest harness-over-model table currently available:**
+  an 8B base scores 379.6 average reward alone, **924.4** with the harness, against GPT-5.4's
+  717.4. A harness moving an 8B from bottom to top of a frontier leaderboard.
+
+  ⚠️ **Read its ablation table before believing it.** Every partial configuration lands at or
+  *below* the base model — SFT+final-skill **359.5**, GRPO+1st-skill **305.2**, base **379.6** —
+  while the full system doubles the best of them. Their own words: "no single component is
+  sufficient." An interaction effect with **no main effects** is either genuine synergy or
+  something the ablations do not isolate, and at 16 rollouts per condition with public MIT code it
+  is cheap to check. **This is a good adjudication project.**
+
+  ⚠️ **And the half the write-ups lead less with:** on multi-player social reasoning the same
+  harness *loses* — Avalon win rate 39.0 vs GPT-5.4's 65.0; Diplomacy 2.96 supply centres vs 4.70.
+  So harness gains are large **and domain-bounded**: they transfer where skills are reusable
+  procedures and fail where the task is social and adversarial. Where that boundary sits is
+  unmeasured.
 - **[Terminal-Bench / Harbor](https://github.com/harbor-framework/terminal-bench)** — the task
   format ARES consumes, and the place to contribute an environment.
+- ⚠️ **Check licences before building.** Not everything in this space is open: the
+  `GoodStartLabs/AI_Diplomacy` harness ships under a non-commercial licence that also forbids
+  "extracting moves, outcomes, user interactions, or simulation data" — because for that company
+  the extracted data *is* the product. Its vendored game engine, however, is
+  [`diplomacy`](https://github.com/diplomacy/diplomacy) (Paquette et al., 2019, **AGPL-3.0**),
+  which is separately and genuinely open. Knowing which layer you are standing on matters.
 - **SWE-Bench Verified**, evaluable in ~20 minutes with remote sandboxing, which makes the
   iteration loop cheap enough to actually study.
 
