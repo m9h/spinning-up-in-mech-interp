@@ -122,6 +122,22 @@ interpretability prize** awarding completed work.
 **If you want to know why this curriculum ships a null with every technique, that paper is the
 field's own answer, and it is asking for help.**
 
+### The rarest artifact is a published ablation
+
+Weights are common now. What makes a claim *checkable* rather than merely reported is the layer
+underneath — and Ai2 publishes it as standard: *"training data, intermediate checkpoints, data
+mixes, evaluations, **ablations**, and demos."* Almost nobody else ships ablations.
+
+It matters because an ablation table is where a headline goes to be tested. See the COS-PLAY entry
+in §4: the abstract says an 8B beats frontier models, and the ablation table says every partial
+configuration lands at or below the base. **You cannot adjudicate what was not published**, and
+most labs publish the headline without the table.
+
+⚠️ Counter-caveat on the same announcement: "more new artifacts each year than any other
+organization" is a **volume** claim, from Hugging Face's own heatmap, in a release co-authored by
+both parties. Volume is not reproducibility. Converting the first into the second is exactly the
+work this file argues is unowned.
+
 ### Benchmarks — adjudication you can enter rather than run yourself
 
 Interpretability now has **standing benchmarks with held-out private test sets**, which is a
@@ -309,6 +325,14 @@ Where to start if you want to work on it:
   unmeasured.
 - **[Terminal-Bench / Harbor](https://github.com/harbor-framework/terminal-bench)** — the task
   format ARES consumes, and the place to contribute an environment.
+- **[AstaBench](https://arxiv.org/abs/2510.21652)** (Ai2, ICLR 2026) — **2,400+ scientific research
+  problems** across literature understanding, code execution, dataset analysis and end-to-end
+  discovery workflows, with the eval toolkit **and a collection of baseline agents released open
+  source**. Framed explicitly as *rigorous* benchmarking of agents, which makes it the natural
+  companion to [ABC](https://github.com/uiuc-kang-lab/agentic-benchmarks) (§3) — two independent
+  efforts at agent-benchmark rigour, and **nobody has applied ABC's failure taxonomy to AstaBench.**
+  That is a cheap, concrete adjudication project. *(Evidence tier: search summaries, paper unread —
+  see the caveat in §2.3.)*
 - ⚠️ **Check licences before building.** Not everything in this space is open: the
   `GoodStartLabs/AI_Diplomacy` harness ships under a non-commercial licence that also forbids
   "extracting moves, outcomes, user interactions, or simulation data" — because for that company
@@ -374,6 +398,11 @@ geometry rather than from behaviour.
 - **[Timaeus](https://timaeus.co/)** — singular learning theory, the **local learning coefficient (LLC)**, library [`devinterp`](https://github.com/timaeus-research/devinterp) (released April 2026), Discord, open seminars.
 - *Differentiation and Specialization of Attention Heads via the Refined Local Learning Coefficient* ([2410.02984](https://arxiv.org/abs/2410.02984)) — rLLC applied per-head on a two-layer attention-only transformer; induction heads and a previously unidentified multigram circuit.
 - **EleutherAI's "Interpreting Across Time"** — the same axis from a different direction.
+- **OLMo-3 (Ai2)** is the substrate that makes this practical on real models rather than toys: base
+  *and* post-trained variants, the public training data, and **~1,486 intermediate checkpoints**. As
+  of August 2026 Ai2's Hugging Face storage went to ~2 PB with **standard Hub rate limits removed**,
+  so multi-checkpoint downloads run at full throughput — which was the actual tax on doing
+  trajectory work, not compute.
 
 Relation to [rung 4](rung4_induction_heads/): we measure the induction phase change *behaviourally*
 across Pythia checkpoints, seeds and sizes, with nulls. rLLC derives the transition from the
