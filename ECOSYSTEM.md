@@ -423,10 +423,21 @@ collaborative research behind it — exists here, in pieces:
 | **[Transluce](https://transluce.org/)** | SF nonprofit, open tooling (Monitor, Docent, ADAG) | open-source repos |
 | **[Neuronpedia](https://neuronpedia.org)** | open platform | hosts external lenses and SAEs; has an open-problems list |
 | **[Open-R1](https://huggingface.co/blog/open-r1)** (HF) | staged open reproduction of a reasoning model | the reproduction model, at scale |
+| **[Cohere Labs Open Science Community](https://labscommunity.cohere.com/)** | ★ the closest thing to a **MedARC for ML**: application-gated Discord, a **Summer School** (speakers from INRIA, Meta FAIR, DeepMind), a community HF org, and a paid full-time **Scholars Program** | *"led by the interests of its members, with active community members **proposing and leading programs**"* — contributing a module is a defined path, not a cold pitch |
 | **MIB / BlackboxNLP** | benchmark + ACL workshop | submit to a leaderboard |
 | **[Martian](https://withmartian.com/prize)** | company (LLM routing) with a serious interp arm; co-authors of the ACL 2026 auditability call | runs a **$1M interpretability prize** — grants for directions *and* awards for completed work, currently between rounds — and hackathons with **Apart Research** |
 | **[NDIF / `nnsight`](https://github.com/ndif-team)** | **$9M NSF** national infrastructure (Bau Lab); remote execution on open-weight model internals | 110+ papers; free academic access |
 | **[Decode Research](https://www.decoderesearch.org/)** | the nonprofit that now maintains **Neuronpedia + SAELens + circuit-tracer + SAEDashboard** | "always looking for new partners" |
+
+**★ A curriculum-shaped hole.** The Cohere Labs Summer School's 21 sessions span ML math,
+transformers, computer vision, embeddings, world models, RL, distributed training, agentic AI and
+evaluations — and contain **no mechanistic interpretability at all**, and no controls thread. Three
+sessions are adjacent enough that the audience is primed: *Test-Time Scaling Small LMs to o1 level*
+(harness-over-model, in their own curriculum), *A Temperature Check on Web Agents*, and
+*Understanding Transformers via N-gram Statistics*. Their format is talks; this curriculum is eight
+runnable rungs that need no GPU, no HF token and under 25 seconds each. **Those are complementary
+gaps in both directions.** Rung 3 is the right entry point for a general-ML audience — no
+downloads, no prior interpretability.
 
 **Unclaimed Timaeus projects that overlap this curriculum directly** (difficulty as they list it):
 
