@@ -74,12 +74,32 @@ toward the training majority, which is anti-correlated with a complementary test
 [PITFALLS #25](../PITFALLS.md). A null that is *off* in the wrong direction is not a small
 problem; it means you do not know where your floor is.
 
-## Next
+## The twin: [`positive_control.py`](positive_control.py)
 
-The salmon supplies the **null**: a good method finds nothing here. Its other half is a **positive
-control** — a network whose contents are known by construction, where a good method must find
-exactly the planted program. That is [Tracr](https://arxiv.org/abs/2301.05062), and it is the
-companion to this script. See [ECOSYSTEM.md §4](../ECOSYSTEM.md).
+The salmon supplies the **null** — a good method must find nothing in a dead network. On its own
+that is untestable: "the probe found nothing" and "my probe cannot find anything" look identical
+(PITFALLS #13). So the companion script supplies the **positive control**: a transformer whose
+weights are **written by hand**, so the computation is known before the first forward pass. One
+attention-only layer computing `frac_prevs(tok == 'a')`; the ground truth is four lines of source.
+
+| probe target | R² | |
+|---|---|---|
+| `frac_a` — the model computes it, it is in residual dim 5 | **1.000** | the probe works |
+| `frac_b` — the model **never computes it** | **0.454** | ★ the trap |
+| shuffled `frac_a` — values on the wrong rows | **−0.003** | the real floor |
+
+The middle row is the point. **`frac_b` is not in the model — we wrote the weights.** But the three
+fractions sum to 1, so `frac_b` is statistically entangled with `frac_a`, and a working probe
+decodes it at R² 0.45 anyway.
+
+> **"A probe decodes X" and "the model represents X" are different claims.** Here they can be
+> proven to come apart, because the ground truth is in the source. In a trained network you cannot
+> prove it — which is why a decoding result is an upper bound, not a representation result.
+
+This is the idea behind [Tracr](https://arxiv.org/abs/2301.05062), which compiles RASP programs
+into transformer weights. Tracr is Apache-2.0 but **archived and JAX-based**, so rather than add a
+dormant dependency (see [ECOSYSTEM.md §2.3](../ECOSYSTEM.md) on exactly that mistake) the
+construction here is 40 lines of torch you can read.
 
 Then [rung 1](../rung1_features_and_circuits/), where the same discipline is applied to a real
 result: a vision feature, measured against a random-init net *and* a weight-shuffled one.

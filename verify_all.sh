@@ -18,7 +18,7 @@ done
 # --- tool gates: our recommendations held to the standard we hold papers to ---
 # These test an EXTERNAL line of evidence against a signal a rung already measured, rather than
 # re-running our own script and agreeing with ourselves. Skipped if optional deps are absent.
-for g in tools/gate_autointerp.py; do
+for g in salmon/positive_control.py tools/gate_autointerp.py; do
   n=$(basename "$g" .py)
   START=$(date +%s)
   $PY "$g" >/tmp/spinup_$n.out 2>/tmp/spinup_$n.err; rc=$?
