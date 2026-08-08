@@ -21,6 +21,11 @@ socially reasoning. The prescription is the one this curriculum is built on: tre
 interpretability method as a **statistical estimator**, test findings against explicit alternative
 computational hypotheses, prioritise identifiability, and quantify uncertainty.
 
+**And it is runnable** — [`salmon/starter.py`](salmon/) does exactly this in 30 seconds: a probe
+reads sentiment out of a randomly initialized BERT at 60.6%, while a bag-of-words baseline with no
+transformer at all gets 57.2% and pretraining adds only 2.6 points. Run it before you read another
+interpretability paper.
+
 Every rung here ships a null because of this. Rung 1 has a random-init net and a weight-shuffled
 net; rung 3 a random dictionary; rung 5 a random direction and a negation; rung 7 the median
 (layer, position) cell. If your method reports something interesting about a dead network, that

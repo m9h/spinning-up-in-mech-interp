@@ -316,3 +316,27 @@ checked our own scripts against our own expectations. It was caught the first ti
 line of evidence* was demanded — observational firing rather than intervention. Related: **#13** (a
 null with no positive control), **#21** (dividing is not controlling), **#23** (bimodal, not binomial
 — the same tell, a distribution with two modes masquerading as one).
+
+## 25. An intercept can push your null *below* chance, and that looks like a finding
+
+Building the [dead-salmon demo](salmon/), the shuffled-label null came out at **43%** rather than
+50% — twice, stably. A null landing 7 points *below* chance is not noise at n=500, and the
+temptation is to find it interesting.
+
+It was a bug in the probe. The ridge fit added the **training-set mean back as an intercept**, so
+predictions leaned toward whichever class was commoner in training. With complementary
+cross-validation folds, the training majority is *anti*-correlated with the test fold, so the
+bias pushed accuracy systematically below chance. Centring the target and dropping the intercept
+moved the null to **47.6%** (5 shuffles, 44.0–50.6) — where a null belongs.
+
+Two things worth taking:
+
+- **Check your null is centred where it should be, not merely "not the signal."** A null at 43%
+  and a null at 50% look equally "not 60%", and only one of them means your floor is measured.
+  Had the signal been weaker, the same bias would have *manufactured* a gap.
+- **One draw of a null is a sample, not a floor.** The fix is visible partly because we started
+  averaging over five shuffles and could see the spread. A single shuffle at 44% is
+  indistinguishable from a single shuffle at 50% plus bad luck.
+
+Related: **#13** (a null with no positive control), **#20** (asymmetric filtering), **#24** (the
+attention sink — the other case where a number that looked measured was an artifact).

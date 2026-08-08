@@ -45,6 +45,7 @@ Verified end-to-end from a clean virtualenv on CPU. Times exclude the one-off mo
 
 | rung | runtime | download | what you should see |
 |---|---|---|---|
+| **[salmon](salmon/)** *(the premise)* | ~30 s | ~440 MB | a probe reads sentiment out of a **randomly initialized BERT** at **60.6%**; bag-of-words gets 57.2%, so the architecture added +3.4 and pretraining only +2.6 |
 | **1** features & circuits | ~23 s | ~50 MB | conv1 channel **#48**, selectivity **1.000**, single-spike tuning curve; trained median 0.248 |
 | **2** residual stream | ~5 s | ~500 MB | OV copying top **L11H3 +5.84** (median head +0.96); QK previous-token top **L4H11 = 1.00** |
 | **3** superposition | ~13 s | none | more features represented than dimensions as sparsity rises; at sparsity 0.99 recovery collapses to the null |
@@ -58,6 +59,7 @@ Rungs 2, 4, 5 and 7 all use GPT-2 small, so the ~500 MB download happens once.
 
 | rung | signal | its null |
 |---|---|---|
+| salmon | random net **60.6%** | shuffled labels **47.6%**; bag-of-words **57.2%** — the null that bites |
 | 1 | trained top **1.000** | random-init ~0.5, weight-shuffle ~0.98; **40/64** units beat every shuffle seed |
 | 2 | copying z **+5.84** | random matrix ≈ **0**; QK uniform-attention baseline **0.16** |
 | 3 | recovery beats null at moderate sparsity | random dictionary; at sparsity 0.99 they **converge** — the control catches the failure |
