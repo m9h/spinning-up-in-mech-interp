@@ -429,15 +429,30 @@ collaborative research behind it — exists here, in pieces:
 | **[NDIF / `nnsight`](https://github.com/ndif-team)** | **$9M NSF** national infrastructure (Bau Lab); remote execution on open-weight model internals | 110+ papers; free academic access |
 | **[Decode Research](https://www.decoderesearch.org/)** | the nonprofit that now maintains **Neuronpedia + SAELens + circuit-tracer + SAEDashboard** | "always looking for new partners" |
 
-**★ A curriculum-shaped hole.** The Cohere Labs Summer School's 21 sessions span ML math,
-transformers, computer vision, embeddings, world models, RL, distributed training, agentic AI and
-evaluations — and contain **no mechanistic interpretability at all**, and no controls thread. Three
-sessions are adjacent enough that the audience is primed: *Test-Time Scaling Small LMs to o1 level*
-(harness-over-model, in their own curriculum), *A Temperature Check on Web Agents*, and
-*Understanding Transformers via N-gram Statistics*. Their format is talks; this curriculum is eight
-runnable rungs that need no GPU, no HF token and under 25 seconds each. **Those are complementary
-gaps in both directions.** Rung 3 is the right entry point for a general-ML audience — no
-downloads, no prior interpretability.
+**★ A curriculum-shaped hole.** The Cohere Labs Summer School is **general ML with an LLM lean, not
+an LLM program** — roughly half its 21 sessions are LLM/NLP (agentic AI, edge agents, embeddings &
+retrieval, test-time scaling, web agents, n-gram statistics), and the rest are **computer vision,
+self-supervised vision, diffusion, world models and RL**, over a foundational layer of ML math and
+distributed training. It contains **no mechanistic interpretability at all**, and no controls thread.
+
+That mixed audience suits this curriculum better than an LLM-only one would, because **this
+curriculum is not LLM-only either**:
+
+- **[Rung 1](rung1_features_and_circuits/) is computer vision** — InceptionV1 orientation tuning
+  against a random-init net *and* a weight-shuffled net. They teach CV fundamentals and
+  self-supervised vision and have no way to inspect features in either. **This is the strongest
+  entry point for that half of the audience**, and the gap is worse there than in language:
+  Microscope has been down since 2025 and `lucent` dormant since March of that year (§1, §2.1), so
+  a CV practitioner currently has no feature-inspection route at all.
+- **[Rung 3](rung3_superposition/) is modality-agnostic** — a toy model, no downloads, no
+  pretrained anything. The right first rung for someone with no interpretability background.
+- Rungs 2/4/5/7 are the GPT-2 half, matching their LLM sessions.
+
+Three of their sessions leave the audience primed: *Test-Time Scaling Small LMs to o1 level*
+(harness-over-model, already in their curriculum), *A Temperature Check on Web Agents*, and
+*Understanding Transformers via N-gram Statistics*. Their format is talks; this is eight runnable
+rungs needing no GPU, no HF token, under 25 seconds each. **Complementary gaps in both
+directions.**
 
 **Unclaimed Timaeus projects that overlap this curriculum directly** (difficulty as they list it):
 
