@@ -224,7 +224,11 @@ not follow.
 The tell is in the name: ARC-AGI-3's first milestone was won by Tufa Labs' **"Duck Harness"** — a
 small open LLM writing Python in a live REPL. The winning entry is a harness, and is called one.
 ARC Prize's own 2024 report: *"there does not exist any static inference-style transduction
-solution that scores above 10%."*
+solution that scores above 11%."* ⚠️ **Pin the version.** The widely-quoted "10%" is from the
+**superseded v1** (5 Dec 2024, still the PDF on arcprize.org); [arXiv v2](https://arxiv.org/abs/2412.04604)
+(8 Jan 2025) — what that link serves today — says **11%**. "Static inference-style" means
+frozen-weight inference with no test-time training; with TTT the same report puts the best
+transduction-only submissions near 40%.
 
 ⚠️ **Do not over-read this.** It is a claim about *where score movement comes from*, strongest for
 small models under a compute cap. The 2026 frontier also delivered very large genuine model-axis
