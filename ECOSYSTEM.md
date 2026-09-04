@@ -45,6 +45,7 @@ Microscope did **three separable things**. Grading a replacement means grading e
 |---|---|---|
 | **[Transluce Monitor](https://monitor.transluce.org)** — code [`TransluceAI/observatory`](https://github.com/TransluceAI/observatory) | **~917,000 MLP neurons of Llama-3.1-8B**, all described | live activations, an "AI linter" that clusters unexpected activations as candidate spurious cues, and **natural-language steering** of neuron clusters |
 | **[Neuronpedia](https://neuronpedia.org)** | Gemma Scope, GPT-2, OLMo-3 and more; SAE features | feature browsing, dashboards, steering, an [API](https://www.neuronpedia.org/api-doc), and [SAEBench](https://www.neuronpedia.org/sae-bench/info) |
+| **[`interp-engine`](https://github.com/decoderesearch/interp-engine)** (Decode Research, Sep 2026, Apache-2.0) | **34 standardised "points"** (`resid_post.16`) across architectures; vLLM backends; powers all of Neuronpedia's inference | the incumbent it targets is [TransformerLens](https://github.com/TransformerLensOrg/TransformerLens) (3.8k stars), whose weakness is per-architecture support lagging modern models (MoE, GQA, latent attention, attention sinks). Also ships a **GPU sizer** so you find out you will OOM before you do |
 
 ⚠️ **Both invite the failure mode [rung 5](rung5_sparse_autoencoders/) is about.** An auto-generated
 description over 917k neurons is a *hypothesis per neuron*, produced at a rate no human verified.
@@ -85,6 +86,15 @@ feature's label predict where it actually fires? — computed exactly, on CPU, i
 than via the 70B vLLM explainer Delphi defaults to. **Building it immediately found a live bug in
 rung 5** (PITFALLS #24): the steering coefficient had been calibrated on GPT-2's attention sink
 and was ~28× too large. That is what a gate is for.
+
+★ **One tool now arrives carrying its own control, and it is worth copying.**
+[`interp-engine`](https://github.com/decoderesearch/interp-engine) ships a `validator/` that
+compares it **against TransformerLens and nnsight/nnterp on real architectures**, plus accuracy
+checks against HF Transformers. That is a cross-implementation check shipped *by the authors*,
+which is the standard this section keeps asking for and almost nothing else meets. **It is still
+unverified by us** — 14 stars, days old, and we have not run it — so it is logged, not
+recommended. But "does your engine agree with two independent implementations" is the right
+question for a tool to answer about itself.
 
 ⚠️ **For everything else this is maintenance evidence, not fitness evidence.** No other tool here
 has been *run* as part of this curriculum. The rungs are verified because `verify_all.sh` executes them and checks
@@ -402,11 +412,29 @@ geometry rather than from behaviour.
 - **[Timaeus](https://timaeus.co/)** — singular learning theory, the **local learning coefficient (LLC)**, library [`devinterp`](https://github.com/timaeus-research/devinterp) (released April 2026), Discord, open seminars.
 - *Differentiation and Specialization of Attention Heads via the Refined Local Learning Coefficient* ([2410.02984](https://arxiv.org/abs/2410.02984)) — rLLC applied per-head on a two-layer attention-only transformer; induction heads and a previously unidentified multigram circuit.
 - **EleutherAI's "Interpreting Across Time"** — the same axis from a different direction.
-- **OLMo-3 (Ai2)** is the substrate that makes this practical on real models rather than toys: base
-  *and* post-trained variants, the public training data, and **~1,486 intermediate checkpoints**. As
-  of August 2026 Ai2's Hugging Face storage went to ~2 PB with **standard Hub rate limits removed**,
-  so multi-checkpoint downloads run at full throughput — which was the actual tax on doing
-  trajectory work, not compute.
+- **OLMo-3 (Ai2)** — the substrate for *emergence*: base and post-trained variants, the public
+  training data, and **1,487 checkpoint branches** on the 7B alone, starting at `stage1-step0`.
+  Ai2's Hugging Face storage went to ~2 PB in Aug 2026 with **standard Hub rate limits removed**,
+  so multi-checkpoint downloads run at full throughput — bandwidth was the tax on trajectory work,
+  not compute.
+- **[K2 Horizon](https://ifm.ai/blog/k2/)** (IFM, Sep 2026, Apache-2.0) — a **connected fleet of
+  six models, 0.9B → 375B**, sharing architecture, vocabulary, training methodology and eval
+  infrastructure. Two things make it the better *teaching* substrate:
+  - **0.9B and 3.7B run on a laptop**, with checkpoints and GGUF builds. OLMo's 7B floor means a
+    GPU. If you want students doing developmental work rather than reading about it, this is the
+    first open family where they can.
+  - **One recipe across six scales** is a scale axis with everything else held constant — what
+    [rung 4](rung4_induction_heads/)'s cross-scale work wanted and had to use 2023-era Pythia for.
+  - ★ It also publishes checkpoints **through agentic post-training** (`rl-mopd`), explicitly to
+    let you study "how reasoning, tool use, planning, and agentic capabilities emerge" — the gap
+    §4 says nothing covers.
+
+  ⚠️ **But it cannot replace OLMo for emergence, and the reason is concrete.** We checked the refs
+  directly rather than trusting the launch post: K2-Horizon-0.9B has **32 tags**, and its pretrain
+  checkpoints run `pretrain_500000` → `pretrain_600000`. **Early training is not published.** You
+  cannot watch a capability appear if the first checkpoint is half a million steps in. Also note
+  the release promises "training data **or** detailed data-construction recipes" — broad openness,
+  conditional in places, where OLMo ships Dolma outright.
 
 Relation to [rung 4](rung4_induction_heads/): we measure the induction phase change *behaviourally*
 across Pythia checkpoints, seeds and sizes, with nulls. rLLC derives the transition from the
