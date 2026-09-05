@@ -340,3 +340,37 @@ Two things worth taking:
 
 Related: **#13** (a null with no positive control), **#20** (asymmetric filtering), **#24** (the
 attention sink — the other case where a number that looked measured was an artifact).
+
+## 26. Cross-validating against someone else does not check what you think it checks
+
+We published a cross-validation of our OLMo-3 Jacobian lenses against Neuronpedia's independently
+fitted lens for the same base model, and called it *"the first external check"* of our pipeline.
+Agreement was good. We reported a per-layer refit floor from it.
+
+An outside reader ([@venvoo](https://github.com/anthropics/jacobian-lens/issues/15)) then found
+that both lenses were fitted under `transformers < 5.13`, where the OLMo-3 modeling code applied
+the config's YaRN `rope_scaling` to **every** attention layer. OLMo-3 has **32 layers: 24 sliding,
+8 full**, and YaRN belongs only on the full-attention ones. **Three quarters of the layers ran a
+positional encoding the model was not trained with** — in both lenses.
+
+The two lenses agreed because they **shared a convention**, not because the convention was right.
+
+> **A comparison between two implementations tests sampling noise. It tests correctness only if
+> the implementations differ in the way that could be wrong.**
+
+What would have caught it: comparing across **library versions**, or against the model's own
+training-time definition (here, the OLMo 3 paper's §3.6.4 and OLMo-core's exporter), rather than
+against another consumer of the same library. "Independent" has to mean independent *in the
+dimension the error lives in*.
+
+Two further notes worth carrying:
+
+- **Agreement between artifacts is weak evidence when both were produced by the same tooling.** Our
+  refit floor is still a valid *sampling* floor. It was simply measured on the wrong forward, and
+  no amount of agreement between the two lenses could have revealed that.
+- **The error was found by a stranger reading a lockfile.** Not by us, and not by the comparison we
+  designed to be the check. That is an argument for publishing the lockfile, and for
+  [ECOSYSTEM](ECOSYSTEM.md)'s standing invitation to report tools that fail to reproduce.
+
+Related: **#13** (a null with no positive control), **#24** (a number that looked measured and was
+an artifact), **#25** (a null that was off in the wrong direction).
