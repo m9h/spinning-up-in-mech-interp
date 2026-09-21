@@ -102,6 +102,13 @@ the control; the external tools here have no such gate. Hold them to the standar
 holds papers to — **run it and see whether the control passes** — before trusting a result you get
 out of one. Reporting back that one of them fails to reproduce is a contribution.
 
+★ **And record the environment in the artifact.** After a fitted lens was found to encode a
+library bug (see [PITFALLS #26](PITFALLS.md)), Neuronpedia's published lens configs now carry the
+full environment under the comment *"the forward pass this lens encodes depends on these"* —
+`transformers 5.17.0, torch 2.11.0+cu128, … jlens_commit 22f0412f…`. **A fitted artifact is a
+function of its library versions**, and publishing one without them makes the class of error
+undetectable. Cheap to adopt, and it is what lets anyone else run the cross-version check.
+
 **Watch for relocations, too.** SAELens moved from `jbloomAus/` and circuit-tracer from
 `safety-research/`, both to `decoderesearch/`; old links redirect but are stale. `tuned-lens` is
 still listed by EleutherAI, while the maintained copy lives under `AlignmentResearch` and has not
@@ -147,6 +154,56 @@ most labs publish the headline without the table.
 organization" is a **volume** claim, from Hugging Face's own heatmap, in a release co-authored by
 both parties. Volume is not reproducibility. Converting the first into the second is exactly the
 work this file argues is unowned.
+
+### ★ One lab shipped its own adversarial review — copy this
+
+When Anthropic released *Verbalizable Representations Form a Global Workspace in Language Models*
+([arXiv 2607.15495](https://arxiv.org/abs/2607.15495) ·
+[TC thread](https://transformer-circuits.pub/2026/workspace/index.html)), it published alongside it
+an **[external commentary document](https://www-cdn.anthropic.com/files/4zrzovbb/website/cc4be2488d65e54a6ed06492f8968398ddc18ebe.pdf)**
+— ~22k words of solicited critique from people positioned to disagree:
+
+- **Stanislas Dehaene & Lionel Naccache**, who originated the global neuronal workspace model the
+  paper is named after. Their verdict is a qualified yes with explicit limits — *"key differences —
+  in its anatomy and its sense of self, and in its lack of a body and of an enduring episodic
+  memory — which warrant caution."* They also note the J-space appears to suffer the same
+  **introspective dissociation** humans do, citing **Ericsson & Simon (1993)** on protocol analysis,
+  Gazzaniga on confabulation, and Johansson's choice blindness.
+- **Butlin, Shiller, Plunkett & Long (Eleos AI)** — authors of the indicator framework the
+  consciousness-claim literature runs on.
+- **Neel Nanda (GDM)**, whose commentary contains **an independent replication on an open model**
+  (below).
+
+**This is the adjudication function, executed voluntarily by the party being adjudicated.** It is
+rare and it is the right practice. Note what makes it work: the commentators were chosen for
+standing to object, the paper changed in response (Dehaene marks which sections postdate his first
+draft), and the critique ships *with* the result rather than years later.
+
+### Replicating a 2026 flagship result is cheap — someone already did
+
+Nanda and MATS scholars Camila Blank and Agam Bhatia replicated the J-lens on **Qwen 3.6 27B**:
+verbal-report causal effect, CKA structure ("less clean"), directed modulation, and the
+multilingual and typo evals all reproduced; **poetry and arithmetic did not**, which they attribute
+to model capability or experimenter error rather than the method. They also scaled it to
+**Qwen3.5-397B-A17B** (~1 hour, n=4 prompts, 8×H200).
+
+⚠️ **The cost claim, stated precisely** — because the loose version is misleading. The paper's §A.7
+says *"J-lens beats the logit lens and tuned lens **baselines** with as few as 10 prompts, with
+modest improvements coming from additional data."* That licenses a cheap fit **for showing a lens
+is useful**. It does *not* license a cheap fit for measuring **differences between two lenses**,
+where a noisier lens raises the floor you are comparing against. Match your n on both sides of
+every comparison.
+
+Open-model J-lens infrastructure now exists:
+[`neuronpedia/jacobian-lens`](https://huggingface.co/neuronpedia/jacobian-lens) (pre-fitted lenses
+for ~38 open models, with the **full fit environment recorded in each `config.yaml`** — see §2.3),
+[`anthropics/jacobian-lens`](https://github.com/anthropics/jacobian-lens) (Apache-2.0 reference
+implementation), an [nnsight tutorial](https://nnsight.net/tutorials/mini-papers/jacobian-lens/),
+and [`solarkyle/jspace`](https://github.com/solarkyle/jspace) — a **preregistered** reliability
+campaign on Gemma-4-12B (25k prompts, frozen SHA-256-hashed classifiers, public traces) reporting
+both a **prospective transfer miss** and an **answer-readout confound** that invalidates
+constant-truth probe slices. That last one is adjudication done properly by an individual, and it
+is worth reading as a model for how to audit your own favourable numbers.
 
 ### Benchmarks — adjudication you can enter rather than run yourself
 
