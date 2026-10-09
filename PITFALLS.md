@@ -410,3 +410,33 @@ rows, you cannot distinguish the concepts, and the claim should name the weaker 
 Related: **#13** (a null with no positive control), **#25** (a null that was off and looked like a
 finding), and the [salmon twin](salmon/positive_control.py), where a probe decodes a quantity the
 network provably never computes because it is entangled with one it does.
+
+## 28. A cosine of 1.006 is not "very similar"; it is a precision failure, and you will see it
+
+We compared two Jacobian-lens matrices (4096 × 4096, so a flattened vector of 16.7 million
+entries) with `torch.nn.functional.cosine_similarity` in float32 and got **1.0059**. A cosine
+cannot exceed 1. In float64 the same pair is **1.00000**, and every deep-layer value from the
+float32 path was inflated by +0.002 to +0.006. Our published per-layer refit floor carried
+those inflated numbers for three weeks; the validation gate in our own library had the same code.
+
+Why it happens: these matrices are identity-dominated — a few thousand entries near 1 and
+millions near 0. Summing 16.7 million float32 squares mixes both scales, and the dot product
+and the two norms accumulate error *differently*, so their ratio drifts off 1 in either direction.
+A value just *under* 1 would have looked plausible and been wrong by the same amount; the
+overshoot was a gift.
+
+> **Any agreement statistic computed over a large, scale-mixed vector in float32 is suspect in
+> the third decimal.** For lens-vs-lens, probe-vs-probe, or activation comparisons at
+> `d_model²` scale, compute in float64 and treat the float32 value as a rough check.
+
+Two further notes:
+
+- **This is only a floor problem when the floor is near 1.** Our early-layer floor (0.88–0.95)
+  was accurate to the third decimal; only the deep layers, where the floor approaches 1 and the
+  question is "how far from 1", were affected. That is the region where the precision matters
+  most and the error is largest.
+- **The sign of the error is uninformative.** Do not assume float32 *under*-estimates agreement.
+
+Related: **#26** (the comparison that shared a convention) — the same two lenses, the same
+file, and a second thing wrong with the comparison that nobody noticed because the numbers
+looked like numbers.
