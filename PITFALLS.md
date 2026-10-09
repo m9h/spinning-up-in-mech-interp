@@ -374,3 +374,39 @@ Two further notes worth carrying:
 
 Related: **#13** (a null with no positive control), **#24** (a number that looked measured and was
 an artifact), **#25** (a null that was off in the wrong direction).
+
+## 27. Where two labels coincide, the probe cannot tell you which one it learned
+
+Fit a "truth" probe on a slice where the model always answers honestly. The true bit and the
+answer the model gives are the **same label** on every row. The probe reaches AUROC 1.0. Now ask
+what it learned: *truth*, or *the answer that is about to come out*? On that slice the question has
+no answer, because nothing in the data distinguishes the two.
+
+This has three published names in 2026:
+
+- **Perfect aliasing / fitting-label ambiguity** — *The Truth Was Never Gone*
+  ([2609.10739](https://arxiv.org/abs/2609.10739)): an ally-fitted probe scored 0.006 AUROC on the
+  rival context and looked like the truth was gone. It was not — fitting on **both** contexts, where
+  the labels differ, recovered 1.000. The low score was an artifact of where the probe was fitted.
+- **Self-judgement confounding** — [2607.16799](https://arxiv.org/abs/2607.16799): "is this
+  correct?" and "does the model think this is correct?" agree on almost every row, so a correctness
+  probe cannot be told from a self-judgement probe. On the rows where they disagree, probes follow
+  the model's opinion. Transferring across domains does not settle it; only conflict items do.
+- **The answer-readout confound** — [solarkyle/jspace](https://github.com/solarkyle/jspace): any
+  slice with constant truth (unanswerable → always "abstain") is this failure in its simplest form.
+
+We walked into the third one. Our metacognition result had a clean main AUROC and an unanswerable
+control that was constant-truth by construction; the control's AUROC was uninterpretable and we had
+reported it. See the banner on
+[`metacognition_result.md`](https://github.com/m9h/jacobian-lens/blob/main/results/posttrain/metacognition_result.md).
+
+> **A probe is a classifier of the labels you gave it, not of the concept you named.** If two
+> concepts agree on the fitting set, you fitted both and can claim neither.
+
+What to do: fit across conditions where the candidate concepts **disagree** (mixed fitting), and
+report performance on the disagreement rows separately. If you cannot construct disagreement
+rows, you cannot distinguish the concepts, and the claim should name the weaker one.
+
+Related: **#13** (a null with no positive control), **#25** (a null that was off and looked like a
+finding), and the [salmon twin](salmon/positive_control.py), where a probe decodes a quantity the
+network provably never computes because it is entangled with one it does.

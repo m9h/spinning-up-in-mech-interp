@@ -205,6 +205,35 @@ both a **prospective transfer miss** and an **answer-readout confound** that inv
 constant-truth probe slices. That last one is adjudication done properly by an individual, and it
 is worth reading as a model for how to audit your own favourable numbers.
 
+### Two adjudication *methods* are now in print — the standing function still is not
+
+- ★ ***The Story is Not the Science: Execution-Grounded Evaluation of Mechanistic Interpretability
+  Research*** ([2602.18458](https://arxiv.org/abs/2602.18458), Bai, Baumgartner, Sun, Holtzman &
+  Tan, UChicago; code [ChicagoHAI/MechEvalAgent](https://github.com/ChicagoHAI/MechEvalAgent/)).
+  Evaluates the **code and data, not the narrative**: 30 MI outputs, including ten human-written
+  repositories from ICLR, NeurIPS and the Alignment Forum. *"Over 90% of the tasks have at least
+  one failure in reproducibility, largely driven by execution errors"* — model loading, shape
+  errors, environment setup. Catches 67 of 87 human-found issues and surfaces 51 more; the most
+  common coherence failure is **missing statistical significance**. This is a measurement of the
+  thing §2.3 of this file warns about, on published work.
+- ★ ***When Circuits Are Too Broad: Unit Tests for Mechanistic Interpretability***
+  ([ICML 2026](https://icml.cc/virtual/2026/79409)). *"A negative-control protocol for evaluating
+  the specificity of circuit and feature claims"*: does the mechanism survive nuisance rewrites,
+  fail on matched negatives, avoid off-target damage, and beat a cheap same-budget baseline?
+  Summarised as **specificity frontiers** — target effect against off-target damage across
+  intervention strengths. Their own description: *"a falsification layer for mechanistic claims,
+  not a new discovery method."* That is this curriculum's register, in the ICML proceedings. Every
+  rung's null is one of their four questions.
+
+Two more that name the probe failures this curriculum teaches, with fixes:
+- ***The Truth Was Never Gone: Perfect Aliasing in Compliant-Context Truth Probes***
+  ([2609.10739](https://arxiv.org/abs/2609.10739)) — the solarkyle constant-truth-slice confound,
+  named: where two labels coincide, *"a probe fitted there cannot tell which of the two it
+  measures."* Fix: fit across contexts where they differ. See [PITFALLS #27](PITFALLS.md).
+- ***Diagnosing Correctness Probes under Self-Judgement Confounding***
+  ([2607.16799](https://arxiv.org/abs/2607.16799)) — a "correctness" probe usually cannot be told
+  from a "the model thinks it is right" probe; on conflict items, probes follow the latter.
+
 ### Benchmarks — adjudication you can enter rather than run yourself
 
 Interpretability now has **standing benchmarks with held-out private test sets**, which is a
@@ -276,6 +305,15 @@ domain-specific SAEs; the dispute is live and is itself a good adjudication targ
 **Every method named in this file assumes a single forward pass.** Attribution graphs, SAEs,
 lenses, probes, activation oracles, circuit tracing — all of it takes one prompt and looks inside
 one pass. So do all eight rungs here.
+
+*(Added 8 Oct 2026.)* **AgenticInterpBench / HyVE** ([2606.24026](https://arxiv.org/abs/2606.24026),
+Findings of EMNLP 2026): **84 semi-synthetic transformer circuits with 163 component-level
+annotations** — ground truth by construction, the same move as [`salmon/positive_control.py`](salmon/positive_control.py).
+LM agents as circuit explainers fail *"later in the validation loop, through incomplete
+validation plans, code execution errors, or unresolved hypotheses"*; *"reliable validation remains
+the key obstacle."* No random-circuit or shuffled null is visible in the abstract — the salmon
+question to ask of it. Also: *Automated Interpretability and Feature Discovery with Agents*
+([2605.01555](https://arxiv.org/abs/2605.01555)), agent loops over one-shot autointerp on Gemma-2.
 
 Deployment moved. Coding agents run for hours across hundreds of tool calls, and the toolkit did
 not follow.
@@ -492,6 +530,16 @@ geometry rather than from behaviour.
   cannot watch a capability appear if the first checkpoint is half a million steps in. Also note
   the release promises "training data **or** detailed data-construction recipes" — broad openness,
   conditional in places, where OLMo ships Dolma outright.
+
+- ★ **Huginn-0125 (UMD) — the only *looped* model with a public pretraining trajectory.**
+  [`JonasGeiping/huginn-0125-checkpoints`](https://huggingface.co/JonasGeiping/huginn-0125-checkpoints)
+  holds **46 in-training checkpoints at uniform 1,024-step spacing** (`step_00001024` →
+  `step_00047104`; 14.26 GB each, fp32; "only to be used for analysis"). Why it matters: Wang &
+  Reid ([2609.01924](https://arxiv.org/abs/2609.01924)) showed the Jacobian-lens workspace
+  *survives* weight-tied recurrence on Huginn and named their own limitation as *"one pre-trained
+  checkpoint per family … following checkpoints throughout pretraining would … reveal when
+  J-space emerges."* The checkpoints exist; we found nobody using them for this. Weight tying
+  makes the per-checkpoint fit cheap (their per-loop transports: cos 0.9991).
 
 Relation to [rung 4](rung4_induction_heads/): we measure the induction phase change *behaviourally*
 across Pythia checkpoints, seeds and sizes, with nulls. rLLC derives the transition from the
