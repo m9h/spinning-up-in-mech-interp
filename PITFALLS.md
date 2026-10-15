@@ -440,3 +440,66 @@ Two further notes:
 Related: **#26** (the comparison that shared a convention) — the same two lenses, the same
 file, and a second thing wrong with the comparison that nobody noticed because the numbers
 looked like numbers.
+
+## 29. If two estimators of the same quantity disagree more than your effect, you have measured the estimator
+
+The Jacobian lens and the J++/R-lens (Ayonrinde & Lindsey 2026; Blank, Bhatia & Nanda 2026)
+estimate the same object — the mean Jacobian from layer ℓ to the final layer — and differ only
+in the backward pass and in which source activations are averaged. On Qwen3-4B, Neuronpedia's
+published J-lens and J++ lens for the *same model, same corpus* have a flattened cosine of
+**0.26 at layer 0, 0.33–0.79 through the middle, and 0.97 only at the last two layers**; the
+off-identity parts are anti-correlated at layers 29–32. Prompt count cannot explain it (a
+5×-under-fit J-lens still scores 0.96 against the converged one).
+
+Our post-training ladder reports cos(base, instruct) = 0.69 under the J-lens, concentrated in
+early layers. The estimator choice moves the lens more than post-training does, and it moves it
+most exactly where our effect is largest. The ladder is still a real difference *under one
+fixed estimator* — but until it is re-run under the other estimator it is a claim about what the
+J-lens sees, not about what the model does.
+
+> **Before claiming a representational change, measure the between-estimator distance on an
+> unchanged model.** If it is larger than your effect, the effect must be shown under both
+> estimators, and the layers where the estimators disagree most are the layers where your
+> localisation claim is weakest.
+
+Why this is easy to miss: both estimators pass the same sanity checks (beat the logit lens,
+survive the randomisation control, give coherent readouts late). Agreement on readouts at layer
+30 says nothing about agreement on matrices at layer 3. And a refit-noise floor — two fits with
+the *same* estimator on different prompts — controls for sampling only; it is blind to this by
+construction.
+
+Related: **#26** (the comparison that shared a convention), **#22** (robustness checks that
+cannot see the confound you have). Source: `jacobian-lens/notes/jpp_lens_2026-10.md` §4.
+
+## 30. The lockfile is not the environment the artifact was made in
+
+We published an erratum saying our eleven OLMo-3 Jacobian lenses were fitted under
+transformers 5.9.0, which applied YaRN RoPE to the wrong 24 of 32 layers. The evidence was the
+repository's `uv.lock`, which does resolve to 5.9.0. The lenses were fitted on Modal, whose image
+is built from `pip_install("transformers>=5.5,<6")` at build time and never reads the lockfile.
+A one-line probe inside the cached image, six weeks later, printed **5.14.1** — a version that
+already contains the fix. The lenses were never wrong. The refit we ran "under the fix" changed
+them by 0.2% at layer 0 and nothing deeper, which we had read as "the bug's damage is small" when
+it was the numerical drift between two fixed versions. The bug's real damage, measured afterwards
+by forcing the wrong RoPE back on in the same pipeline, is a layer-0 lens cosine of 0.89 and a 4%
+shift in the layer-30 identity distance — the external reporter's number, which we had spent a
+month arguing down.
+
+Three failures stacked: (1) we inferred the environment from a file the pipeline does not use;
+(2) the artifacts recorded no environment of their own, so there was nothing to check against;
+(3) when the refit showed no change, we explained the null instead of testing it (a 5% move was
+predicted by two independent parties, and we had a near-zero — that mismatch was the finding).
+A fourth, quieter one: our fixed lens agreed with the other party's *buggy* lens to 0.5%, which we
+took as validation. It was two ~5% effects — the bug, and a different prompt set — cancelling.
+Agreement is only evidence when you know what would have broken it.
+
+> **An artifact must carry the versions that produced it, written by the process that produced
+> it.** Neuronpedia's `config.yaml` now does this (`environment:` block, since 20 Sep 2026); the
+> J++ files carry a `provenance` dict. Our `.pt` files carried `n_prompts` and nothing else. A
+> lockfile, a README, or a pin string is a statement of intent, not a record.
+
+Related: **#26**, **#28** — the same erratum produced three pitfalls, which is itself the lesson:
+an error report that turns out to be partly wrong is still worth the full post-mortem, because
+the parts that were right (the floor was protocol, not the bug; float32 cosines overshoot) only
+came out because we kept pulling. Source: `jacobian-lens/results/ROPE_ERRATUM.md`, update of
+2026-10-15.

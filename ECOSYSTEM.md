@@ -205,6 +205,37 @@ both a **prospective transfer miss** and an **answer-readout confound** that inv
 constant-truth probe slices. That last one is adjudication done properly by an individual, and it
 is worth reading as a model for how to audit your own favourable numbers.
 
+**Two better estimators of the same lens, and a number to carry around (Oct 2026).** The
+**R-lens** (Blank, Bhatia & Nanda, Aug 2026, [LessWrong](https://www.lesswrong.com/posts/nv8oedrnLXKRzNEL9))
+keeps the J-lens recipe and swaps the backward pass for layer-wise relevance propagation (three
+stop-gradients: LN-rule on the norms, identity and half rules on the gated MLP); the **J++ lens**
+(Ayonrinde & Lindsey, Oct 2026, [LessWrong](https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr),
+[code](https://github.com/safety-research/jpp_lens) Apache-2.0,
+[lenses](https://huggingface.co/koayon/jpp-lenses)) adds *Jacobian Filtering* — k-means the source
+activations into 8 clusters per layer, fit one Jacobian per cluster, learn signed weights on a small
+labelled dev set so clusters that give poor readouts get zero or negative weight — and drops
+non-alphanumeric tokens from the ranking. Recall@10 of the intermediate variable on Qwen3.6-27B:
+J-lens 35.7%, R-lens 37.7%, **J++ 55.2%**; six models 9B–284B, median +64% over J-lens, the gain
+largest at early layers, Jacobian Filtering 60% of it. Both are drop-in: one matrix per layer, no
+inference cost. Neuronpedia serves J++ beside the J-lens and ships both under
+`<model>/jlens/` and `<model>/jpp/` in the same HF repo (so a loader that globs `<model>/` now
+picks up two formats — ours did). **The number:** on Qwen3-4B, Neuronpedia's J-lens and J++ for
+the *same model and corpus* have a flattened cosine of **0.26 at layer 0** and below 0.8 at every
+layer but the last two ([PITFALLS #29](PITFALLS.md)). Any between-model J-lens difference smaller
+than that, at those layers, is a claim about the estimator until shown under both. Also note the
+authors' candour: J++ is no longer unsupervised (the expert weights see labelled items), and
+their null results — affine bias, single-token Jacobians, final-block-as-unembedding — are listed.
+
+The same Neuronpedia post carries a guest section from the MIT Media Lab, **Drift Calibrator**
+([paper](https://neuronpedia.s3.us-east-1.amazonaws.com/site-assets/blog/mit-drift-calibrator.pdf),
+N = 246, randomised): a chat UI that shows six trait scores per turn from difference-in-means
+persona vectors (Llama-3.1-8B-Instruct, layer 11) and measurably improves users' calibration to
+behavioural drift (d ≈ −0.36). Read §3.1 of the paper with [PITFALLS #27](PITFALLS.md) in hand:
+the vectors are fitted on responses to *positive vs negative trait system prompts*, validated by
+regression against the *prompted* intensity, and read at the last token of the user's prompt. It
+is a well-run UI study sitting on an un-adjudicated probe — the clearest example yet of who
+consumes a probe nobody validated.
+
 ### Two adjudication *methods* are now in print — the standing function still is not
 
 - ★ ***The Story is Not the Science: Execution-Grounded Evaluation of Mechanistic Interpretability
