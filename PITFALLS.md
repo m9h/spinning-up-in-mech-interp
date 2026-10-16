@@ -468,6 +468,13 @@ survive the randomisation control, give coherent readouts late). Agreement on re
 the *same* estimator on different prompts — controls for sampling only; it is blind to this by
 construction.
 
+**We ran it the same day** (R-lens refit of base and Instruct, same 616 prompts, ~$35): cos(base,
+Instruct) went from 0.689 under the J-lens to 0.784 under the R-lens, the early/late contrast from
+4.9× to 3.5×. The telling number: the two estimators agree on the *base* model's layer 0 to cos 0.66
+but on the *Instruct* model's only to 0.34. The standard backward pass was noisier on the arm that
+moved, and that noise had been counted as movement. The claim survived, smaller and flatter —
+which is the usual outcome of this check, and the reason to run it before publishing the number.
+
 Related: **#26** (the comparison that shared a convention), **#22** (robustness checks that
 cannot see the confound you have). Source: `jacobian-lens/notes/jpp_lens_2026-10.md` §4.
 
