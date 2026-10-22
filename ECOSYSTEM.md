@@ -236,6 +236,36 @@ regression against the *prompted* intensity, and read at the last token of the u
 is a well-run UI study sitting on an un-adjudicated probe — the clearest example yet of who
 consumes a probe nobody validated.
 
+**The J-lens is now a feature extractor other fields consume (22 Oct check).** *Foreword*
+([2610.28187](https://arxiv.org/abs/2610.28187), Kim, Feldt & Yoo, 20 Oct 2026) ranks test
+inputs by failure risk *before generation* using J-lens readouts (layers at 45–90% depth of
+Llama-3.1-8B, Gemma-2-9B, Qwen3-8B — chosen "for which pretrained J-lens models are publicly
+available", i.e. Neuronpedia's) as the representation for a sparse logistic probe or dual GMMs;
+ROC-AUC +0.14 over Clotho on ten tasks. No lens-validity control is run and the authors list
+"varying this corpus, vocabulary size, and layer range" as untested. That is a software-testing
+paper whose numbers inherit every property of a published lens file — the consumer side of the
+adjudication gap, one hop further from the people who could check it than Drift Calibrator.
+**WorkspaceBench** (Blank, Bhatia, Ong & Nanda, LessWrong `Zeg2JztbdhguL48uH`, 23 Sep; code
+[camilablank/workspace-bench](https://github.com/camilablank/workspace-bench)) is the first
+method-agnostic eval of workspace readers: 3,356 questions in 27 families on Qwen3.6-27B, ground
+truth by task construction (the intermediate must be needed, absent from prompt and
+continuation, ≥80% model accuracy), judged by LLMs; J-lens, R-lens, logit/tuned lens, SAEs,
+Patchscopes, NLAs and an Oracle lens compared; no causal interventions by design. Tailored to one
+model and self-described as "not a strict scientific comparison", but it is the closest thing to
+an adjudication layer for this method family that exists, and it is a MATS project, not an
+institution. Also in the open issues of
+[anthropics/jacobian-lens](https://github.com/anthropics/jacobian-lens/issues): #5 (reading
+`apply()` at positions below the fitting floor of 16, and the input-copying ceiling — a probed
+token present in the prompt reads at rank ~1 regardless of workspace content), #6 (`save()`
+silently overflows fp16 to `inf` on badly-conditioned fits), #15 (the OLMo-3 RoPE report that
+triggered Neuronpedia's 21 Sep refit — its emulation numbers match ours to 0.1%). Two community
+toolkits now exist for fitting what Neuronpedia does not ship —
+[bigsnarfdude/jlens-toolkit](https://github.com/bigsnarfdude/jlens-toolkit) (known-answer test
+against a published lens before trusting a fit; its README points at our OLMo ladder repo) and a
+placeholder `vincentoh/olmo-3-7b-jlens` planning Instruct and SFT lenses with per-layer
+validated/provisional labels. The post-training axis is becoming a thing people fit; nobody but
+us has published a lens pair across it with an estimator control.
+
 ### Two adjudication *methods* are now in print — the standing function still is not
 
 - ★ ***The Story is Not the Science: Execution-Grounded Evaluation of Mechanistic Interpretability

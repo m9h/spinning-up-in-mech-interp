@@ -510,3 +510,65 @@ an error report that turns out to be partly wrong is still worth the full post-m
 the parts that were right (the floor was protocol, not the bug; float32 cosines overshoot) only
 came out because we kept pulling. Source: `jacobian-lens/results/ROPE_ERRATUM.md`, update of
 2026-10-15.
+
+## 31. A lens that targets the final layer inherits the final block's favourite direction at every layer — check whether your effect lives there
+
+**Source:** Kaley Brauer, *J-lens shouldn't target the final layer by default* (LessWrong, 25 Sep
+2026); our own control on the OLMo-3-7B base→Instruct pair, 22 Oct 2026.
+
+A Jacobian lens from layer ℓ to the final residual is `E[∂h_final/∂h_ℓ]`. Whatever the last
+block writes with a large norm and a strong dependence on its input becomes a large *output-side*
+singular direction of **every** J_ℓ, because every transport ends by passing through that block.
+Brauer found this on DeepSeek-V3: the last block pushes a Chinese-vs-Latin token direction, it
+barely changes the predictions, and under a final-layer target 46% of mid-depth English readouts
+come out majority-Chinese (3% with a penultimate target). 81% of the 78 public lenses target the
+final layer. Ours do.
+
+We had published "post-training moves layer 0 the most" (cos 0.25 at L0, 0.98 at L30) from
+final-target lenses. Brauer's mechanism offered a cheap alternative: post-training rewrites the
+last block, every earlier J inherits the rewrite, and the depth profile is an artifact of the
+target. The control costs no GPU. Take the top-k output directions of J₃₀ in both arms, measure
+how much of ‖J₀(Instruct) − J₀(base)‖² lies in them, project them out of both lenses, recompute
+the cosine.
+
+On OLMo-3-7B the artifact is real and the claim survives it. The base model's layer-0 transport
+is **47% one direction**, aligned at cosine 0.81 with the last block's top output direction; its
+unembedding is the unigram-frequency axis (`,` `.` ` the` ` and` at one end, rare code
+identifiers at the other) — the direction a last block uses to regulate confidence, with the
+Brauer signature exactly: huge norm, small effect on which token wins. In the Instruct model
+that direction is gone from the top of J₀ (21% in an unreadable direction, cosine 0.07 to the
+last block). But only 16–23% of the movement lies in the last block's top-1 to top-16 output
+directions, and projecting them out moves cos(base, Instruct) from 0.25 to 0.29 at L0 and
+0.42 to 0.49 at L3. Four-fifths of the layer-0 movement is high-rank and not inherited.
+
+> **Before reading a depth profile off final-target lenses, project out the last block's top
+> output directions and read it again.** If the profile survives, say so with the numbers. If it
+> does not, you measured the last block. Either way the dominant direction has a name you can
+> find by unembedding it, and it is worth knowing which one your model has.
+
+Related: **#29** (the same movement, under the other estimator, was also smaller and flatter —
+two independent controls, both leaving most of the effect standing, is what a surviving claim
+looks like). Source: `jacobian-lens/results/final_block_control/`.
+
+## 32. "How much did layer ℓ change?" has two answers, and the identity decides which one you get
+
+**Source:** the same OLMo-3-7B base→Instruct lenses, 22 Oct 2026, while running #31.
+
+A transport J_ℓ = E[∂h_final/∂h_ℓ] is I + (what the layers in between do). Early transports are
+far from I (‖J − I‖/‖I‖ ≈ 1.1 at layer 0 of a 32-layer model), late ones close (0.2 at layer 30).
+Compare two arms by the raw cosine of J and the early layers look most changed (0.25 at L0, 0.98
+at L30). Compare them by the cosine of J − I and the picture inverts: 0.84 at L0, a minimum of
+0.72 at L18–24, 0.82 at L30 — under two estimators, within 0.02. Both are correct. The raw
+cosine measures absolute movement, which is largest where the matrix is largest; the off-identity
+cosine measures how much of what the transport *does* was rewritten, which on this pair is a
+mid-to-late-layer story, and the per-arm identity distances say why: the post-trained model's late
+transports are 15–40% further from pass-through than the base model's. We had published the
+first number with the headline "early layers move most" and had the second in a JSON file for a
+week without reading it.
+
+> **State which statistic a depth profile is, and compute the other one.** If they disagree, the
+> disagreement is the finding, not an inconvenience: it tells you the layers that moved most in
+> absolute terms are the ones that had the most to move.
+
+Related: **#28** (cosines over large matrices), **#31**. Source:
+`jacobian-lens/results/final_block_control/final_block_control.md`.
