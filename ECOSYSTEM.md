@@ -266,6 +266,8 @@ placeholder `vincentoh/olmo-3-7b-jlens` planning Instruct and SFT lenses with pe
 validated/provisional labels. The post-training axis is becoming a thing people fit; nobody but
 us has published a lens pair across it with an estimator control.
 
+**2 Nov 2026 — "Sparks of Weight-Space Programming"** (Takehi, Teoh, Zhang, Khattab, MIT CSAIL; [post](https://rikiyat.github.io/blog/weight-space-programming/), logs CC BY 4.0 at [RikiyaT/lm_understand-logs](https://github.com/RikiyaT/lm_understand-logs), edited model [RikiyaT/Qwen3.5-0.8B-weight-space-programming](https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming)). A frontier LLM (GPT-6 Astra via Codex CLI) identifies which game a PPO net plays, which shape a DDPM draws, and the training language and induction heads of 7M-parameter character models from weights; writes MinAtar and 9×9 Go policies from scratch; and edits Qwen3.5-0.8B so MATH-500 goes 7.9 → 48.1. Weight-reading alone failed on sycophancy (0/4). The Qwen edit, recovered from the released diff, is Arditi-style directional ablation at α = 6 of an activation-contrast "keep going" direction, and the gain is loop termination (PITFALLS #33). The authors are "building a benchmark and a harness" for the method — the first group besides us to name the missing verification layer for agentic interpretability as a deliverable; the agent's own random-direction control exists in the logs and nowhere visible.
+
 ### Two adjudication *methods* are now in print — the standing function still is not
 
 - ★ ***The Story is Not the Science: Execution-Grounded Evaluation of Mechanistic Interpretability

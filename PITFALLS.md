@@ -572,3 +572,29 @@ week without reading it.
 
 Related: **#28** (cosines over large matrices), **#31**. Source:
 `jacobian-lens/results/final_block_control/final_block_control.md`.
+
+## 33. "Edited the weights" can mean "steered the activations and saved the result" — recover the edit before you believe the framing
+
+**Source:** "Sparks of Weight-Space Programming" (Takehi, Teoh, Zhang, Khattab, 2 Nov 2026) and our
+same-day lens-only check (`jacobian-lens/results/weight_space_programming/direction_identity.md`).
+
+The post reports that a frontier LLM edited 0.016% of Qwen3.5-0.8B (64 columns in two `down_proj`
+matrices) and MATH-500 went 7.9% → 48.1%, framed as the model "natively" reading and writing weights.
+The released diff says what the edit is: exactly rank-1 per layer (top singular value carries 0.99999
+of ‖ΔW‖²), W' = W − 6·u(uᵀW), where u is a unit vector the agent built from residual-stream states on
+matched productive-vs-repetitive contexts. That is the refusal-direction recipe (Arditi et al. 2024:
+weight orthogonalisation), at six times the ablation strength, so the chosen neurons' component along u
+is reversed rather than removed. u is not a dominant direction of the weights it was applied to (its
+share of ‖W‖² sits at the uniform baseline) and is not an unembedding artefact (3–4× uniform in the
+embedding PCs, cos 0.04 with the mean embedding); unembedded, it reads "close the thought" versus "keep
+going". The gain is completion: 576 of 579 rescued problems were truncated outputs, accuracy on
+finished outputs was unchanged, and the model's own card warns that it loops. The agent ran a
+norm-matched random-direction control (+1.6 pp, SE 3.5) which appears only inside a 655 KB trajectory
+file, not in the post, the README table, or the model card.
+
+> **Diff the checkpoint, SVD the diff, unembed the direction.** Three CPU minutes tell you whether a
+> "weight edit" is a known activation-steering method written into the weights, which benchmark gain
+> it can and cannot produce, and whether the direction is real or inherited geometry (#31). Then ask
+> where the control went.
+
+Related: **#31**, **#19** (random-direction baselines), **#28**.
