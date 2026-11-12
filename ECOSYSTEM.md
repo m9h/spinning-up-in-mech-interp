@@ -61,6 +61,46 @@ features **and then scores them**, two ways:
 Both are cheap and scalable. If you are going to trust a feature label, this is how you check it.
 See also *Evaluating SAE interpretability without explanations* ([2507.08473](https://arxiv.org/abs/2507.08473)).
 
+#### The small end: one model you can see all of — TinyGPT Visualizer (added 11 Nov 2026)
+
+[`oshea00/tinygpt-viz`](https://github.com/oshea00/tinygpt-viz) (Michael OShea, MIT, first pushed
+26 Oct 2026; [post](https://oshea00.github.io/posts/tinygpt-visualizer/),
+[runs in the browser](https://oshea00.github.io/tinygpt-viz/) on WebGPU) is the opposite of the
+tools above: not 917k neurons of someone else's model with labels, but **every number of one
+5.8M-parameter GPT** (6 layers × 8 heads, width 256, 4,096-token BPE, 100-token context, trained
+on TinyStories), forward and backward, with the weights of **30 log-spaced checkpoints from step 0**
+on the Hub ([`oshea00/tinygpt-viz`](https://huggingface.co/oshea00/tinygpt-viz)). It is a teaching
+instrument, not a research claim: the post reports no result, so there is nothing to replicate.
+Read from the repo docs on 11 Nov; **we have not run it**.
+
+Why it is listed here: it puts most of this ladder's *instruments* in one page on a model small
+enough to hold in your head — tracer and tensor inspector (rungs 0–2), attention patterns with an
+induction score (rung 4), logit lens (rung 6), activation patching (rung 7), and a LoRA / DPO
+fine-tune tab with a refusal direction (the post-training axis of rung 8). Use it *before* a rung
+to see the object, then do the rung to learn what the picture does not prove.
+
+What it gets right, and what to add yourself:
+
+| view | control it ships | control it does not ship (do it by hand) |
+|---|---|---|
+| linear probes | held-out words, **shuffled labels**, and the **untrained step-0 model** — and the docs say why ("readable is not used"; a good untrained score means the probe is reading the template) | — this is the standard to copy |
+| similarity / PCA | untrained-model baseline alongside | — |
+| LoRA generation | with/without the adapter on the **same random draws** | — |
+| steering along a concept direction | negative scale (reversal) | a **norm-matched random direction** at the same scale (rung 5's control; PITFALLS #19) |
+| head / neuron ablation | zero and mean | **ablate a random head** and compare (rung 4's control) |
+| induction score, head badges | — | measured on *one prompt*; the docs say "try a few". A score needs a random-token repeat and a head-shuffled null |
+| logit lens | — | no caveat that the final readout is not the right basis for early layers; no tuned or Jacobian lens (rung 6) |
+| DPO refusal direction | add / subtract, and the base model's own difference-of-means as a contrast | a random direction of equal norm; held-out *n* is 8 unsafe + 8 safe requests |
+
+Two things a reader of this file can do with it. (1) The checkpoint ladder is a ready
+**developmental** substrate (§4, *Developmental interpretability*): when does the induction score
+appear across the 30 checkpoints, and does a random-head null stay flat? That is rung 4's
+question on a model that trains in 22 minutes. (2) The DPO tab is the smallest honest instance of
+rung 8's question — *what does preference tuning do to the representation, separately from what it
+does to behaviour?* — with base, adapter and preference set all published. It also documents a
+negative worth knowing: on this model **DPO alone never produced a refusal** (it made the rejected
+answer unlikely without making the preferred one likely) until an NLL term was added.
+
 ---
 
 ### 2.3 How these recommendations were checked — and how they were not

@@ -168,7 +168,8 @@ What each runnable starter finds, and the null that guards it:
   [Zero to Hero](https://karpathy.ai/zero-to-hero.html) · Raschka,
   [*Build an LLM from Scratch*](https://github.com/rasbt/LLMs-from-scratch) and
   [*Build a Reasoning Model from Scratch*](https://github.com/rasbt/reasoning-from-scratch) ·
-  Mike X Cohen, [*50 ML projects to understand LLMs*](https://github.com/mikexcohen/ML4LLM_book) (investigate transformer internals as data)
+  Mike X Cohen, [*50 ML projects to understand LLMs*](https://github.com/mikexcohen/ML4LLM_book) (investigate transformer internals as data) ·
+  OShea, [TinyGPT Visualizer](https://github.com/oshea00/tinygpt-viz) (every number of one 5.8M-parameter GPT, forward and backward, in the browser; see [ECOSYSTEM §2.2](ECOSYSTEM.md#22-the-tools) for which controls it ships and which it leaves to you)
 - **Post-training, hands-on:** [TRL](https://github.com/huggingface/trl) v1.0 (SFT + reward
   modelling + DPO + GRPO in one stack) and the
   [smol-course](https://huggingface.co/learn/smol-course/unit0/1).
